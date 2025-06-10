@@ -274,8 +274,7 @@ export default function BuscaAulaScreen() {
             style={[styles.resultItem, {
               backgroundColor: dep.color,
               borderWidth: 0,
-              marginBottom: 20,
-              width: 260
+              marginBottom: 20
             }]}
             onPress={() => setDepartamentoSeleccionado(dep)}
           >

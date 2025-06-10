@@ -19,6 +19,7 @@ import CalendarioAcademicoScreen from './screens/CalendarioAcademicoScreen';
 import ComisionesAsignaturaScreen from './screens/ComisionesAsignaturaScreen';
 import BuscaAulaPorCarreraScreen from './screens/BuscaAulaPorCarreraScreen';
 import AsignaturasPorCarreraScreen from './screens/AsignaturasPorCarreraScreen';
+import SitioDetalleScreen from './screens/SitioDetalleScreen';
 
 const Tab = createBottomTabNavigator();
 const AlumnosStack = createStackNavigator();
@@ -32,9 +33,10 @@ function AlumnosStackScreen() {
       <AlumnosStack.Screen name="Sitios" component={SitiosScreen} />
       <AlumnosStack.Screen name="Reglamentos" component={ReglamentosScreen} />
       <AlumnosStack.Screen name="Busca tu aula" component={BuscaAulaScreen} />
-      <AlumnosStack.Screen name="AsignaturasPorCarrera" component={AsignaturasPorCarreraScreen} />
+      <AlumnosStack.Screen name="AsignaturasPorCarrera" component={AsignaturasPorCarreraScreen} options={{ title: 'Asignaturas' }} />
       <AlumnosStack.Screen name="ComisionesAsignatura" component={ComisionesAsignaturaScreen} options={{ title: 'Comisiones' }} />
       <AlumnosStack.Screen name="Calendario Academico" component={CalendarioAcademicoScreen} />
+      <AlumnosStack.Screen name="SitioDetalle" component={SitioDetalleScreen} options={{ title: 'Detalle del sitio' }} />
     </AlumnosStack.Navigator>
   );
 }

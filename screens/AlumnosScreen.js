@@ -49,23 +49,22 @@ export default function AlumnosScreen({ navigation }) {
 }
 
 const styles = StyleSheet.create({
-  sectionTitle: {
-    fontSize: 20,
-    fontWeight: 'bold',
-    marginBottom: 16,
-    textAlign: 'center',
-  },
   button: {
-    width: '80%',
-    backgroundColor: '#0a2447',
-    padding: 18,
-    borderRadius: 8,
-    marginBottom: 18,
+    backgroundColor: '#1976d2',
+    paddingVertical: 16,
+    paddingHorizontal: 28,
+    borderRadius: 10,
+    marginVertical: 8,
+    width: '85%',
     alignItems: 'center',
+    elevation: 2,
+    maxWidth: 400,
   },
   buttonText: {
     color: '#fff',
-    fontSize: 18,
     fontWeight: 'bold',
+    fontSize: 18,
+    textAlign: 'center',
+    width: '100%',
   },
 });
