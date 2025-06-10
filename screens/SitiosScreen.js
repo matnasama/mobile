@@ -13,7 +13,6 @@ export default function SitiosScreen({ route, navigation }) {
     height: 150,
     borderRadius: 16,
     marginVertical: 16,
-    backgroundColor: '#eee',
     alignSelf: 'center',
   };
 

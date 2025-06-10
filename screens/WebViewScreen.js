@@ -2,13 +2,12 @@ import React from 'react';
 import { View, StyleSheet, Dimensions, ActivityIndicator } from 'react-native';
 import { WebView } from 'react-native-webview';
 
-export default function ReglamentosScreen() {
-  const pdfUrl = 'https://raw.githubusercontent.com/matnasama/buscador-de-aulas/1be6073a18b4e6cd3b34c9ddb25336247182dd5d/public/ReglamentoAlumnos.pdf';
-  const viewerUrl = `https://docs.google.com/gview?embedded=true&url=${encodeURIComponent(pdfUrl)}`;
+export default function WebViewScreen({ route }) {
+  const { url } = route.params;
   return (
     <View style={styles.container}>
       <WebView
-        source={{ uri: viewerUrl }}
+        source={{ uri: url }}
         style={styles.webview}
         startInLoadingState
         renderLoading={() => <ActivityIndicator size="large" color="#1976d2" style={{marginTop: 40}} />}

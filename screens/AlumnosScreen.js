@@ -36,7 +36,7 @@ export default function AlumnosScreen({ navigation }) {
         <Text style={styles.buttonText} numberOfLines={1} ellipsizeMode="tail">Sitios</Text>
       </TouchableOpacity>
       <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('Reglamentos')}>
-        <Text style={styles.buttonText} numberOfLines={1} ellipsizeMode="tail">Reglamentos</Text>
+        <Text style={styles.buttonText} numberOfLines={1} ellipsizeMode="tail">Reglamento</Text>
       </TouchableOpacity>
       <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('Busca tu aula', { reset: true })}>
         <Text style={styles.buttonText} numberOfLines={1} ellipsizeMode="tail">Busca tu aula</Text>

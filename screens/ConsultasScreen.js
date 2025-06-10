@@ -30,8 +30,8 @@ export default function ConsultasScreen({ route }) {
 }
 
 const styles = StyleSheet.create({
-  accordionItem: { marginHorizontal: 16, marginBottom: 8, borderRadius: 8, backgroundColor: '#f5f5f5' },
-  accordionTitle: { fontSize: 16, fontWeight: 'bold', padding: 12 },
+  accordionItem: { marginHorizontal: 16, marginTop: 8, marginBottom: 8, borderRadius: 8, backgroundColor: '#f5f5f5' },
+  accordionTitle: { fontSize: 16, fontWeight: 'regular', padding: 12 },
   accordionContent: { padding: 12, borderTopWidth: 1, borderColor: '#ccc' },
   itemText: { fontSize: 14, marginBottom: 4 },
 });
