@@ -1,13 +1,12 @@
-import React, { useState } from 'react';
-import { View, Text, TouchableOpacity, StyleSheet, ScrollView, Image, Dimensions } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { View, Text, TouchableOpacity, StyleSheet, ScrollView, Image, ActivityIndicator } from 'react-native';
 
-export default function SitiosScreen({ route, navigation }) {
-  const { data } = route.params;
+export default function SitiosScreen({ navigation }) {
+  const [sitios, setSitios] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
   // Base URL de imágenes
   const baseUrl = 'https://raw.githubusercontent.com/matnasama/depto-alumnos/5fb38fcb1f2c80d345780ed1461100bb7b15023b/public/';
-
-  // Definir tamaño uniforme para las imágenes
-  const imageSize = 140;
   const imageStyle = {
     width: '90%',
     height: 150,
@@ -16,10 +15,25 @@ export default function SitiosScreen({ route, navigation }) {
     alignSelf: 'center',
   };
 
+  useEffect(() => {
+    fetch('https://raw.githubusercontent.com/matnasama/buscador-de-aulas/refs/heads/main/public/json/info/data.json')
+      .then(res => res.json())
+      .then(json => {
+        setSitios(Array.isArray(json.sitios) ? json.sitios : []);
+        setLoading(false);
+      })
+      .catch(() => {
+        setError('Error al cargar los sitios');
+        setLoading(false);
+      });
+  }, []);
+
+  if (loading) return <ActivityIndicator size="large" color="#1976d2" style={{marginTop: 40}} />;
+  if (error) return <Text style={{color:'red', margin: 20}}>{error}</Text>;
+
   return (
     <ScrollView contentContainerStyle={styles.gridContainer} style={{ backgroundColor: '#fff' }}>
-      {Array.isArray(data) && data.map((item, idx) => {
-        // Buscar campo imagen o url de imagen
+      {sitios.map((item, idx) => {
         const imagenKey = Object.keys(item).find(k => k.toLowerCase().includes('imagen'));
         const imagenPath = imagenKey ? item[imagenKey] : null;
         const imagenUrl = imagenPath ? (imagenPath.startsWith('http') ? imagenPath : baseUrl + imagenPath) : null;

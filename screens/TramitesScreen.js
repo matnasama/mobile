@@ -1,38 +1,89 @@
-import React, { useState } from 'react';
-import { View, Text, TouchableOpacity, StyleSheet, ScrollView } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { View, Text, TouchableOpacity, StyleSheet, ScrollView, Dimensions, ActivityIndicator } from 'react-native';
 
-export default function TramitesScreen({ route }) {
-  const { data } = route.params;
-  const [openIndex, setOpenIndex] = useState(null);
+const CARD_MARGIN = 10;
+const CARD_WIDTH = (Dimensions.get('window').width - 3 * CARD_MARGIN) / 2;
+
+export default function TramitesScreen({ navigation }) {
+  const [tramites, setTramites] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    fetch('https://raw.githubusercontent.com/matnasama/buscador-de-aulas/main/public/json/info/data.json')
+      .then(res => res.json())
+      .then(json => {
+        setTramites(Array.isArray(json.tramites) ? json.tramites : []);
+        setLoading(false);
+      })
+      .catch(() => {
+        setError('Error al cargar los trámites');
+        setLoading(false);
+      });
+  }, []);
+
+  if (loading) return <ActivityIndicator size="large" color="#1976d2" style={{marginTop: 40}} />;
+  if (error) return <Text style={{color:'red', margin: 20}}>{error}</Text>;
 
   return (
-    <ScrollView style={{ flex: 1 }}>
-      {Array.isArray(data) && data.map((item, idx) => {
-        // Buscar el primer campo que no sea id/ID para usar como título
-        const entries = Object.entries(item).filter(([key]) => key !== 'id' && key !== 'ID');
-        const titulo = entries.length > 0 ? entries[0][1] : `Opción ${idx+1}`;
-        return (
-          <View key={idx} style={styles.accordionItem}>
-            <TouchableOpacity onPress={() => setOpenIndex(openIndex === idx ? null : idx)}>
-              <Text style={[styles.accordionTitle, {textTransform: 'uppercase'}]}>{titulo}</Text>
-            </TouchableOpacity>
-            {openIndex === idx && (
-              <View style={styles.accordionContent}>
-                {entries.slice(1).map(([_, value], i) => (
-                  <Text key={i} style={styles.itemText}>{typeof value === 'object' ? JSON.stringify(value) : value}</Text>
-                ))}
-              </View>
-            )}
-          </View>
-        );
-      })}
+    <ScrollView contentContainerStyle={styles.container}>
+      <View style={styles.grid}>
+        {tramites.map((tramite, i) => (
+          <TouchableOpacity
+            key={tramite.id || i}
+            style={styles.card}
+            onPress={() => navigation.navigate('TramiteDetalle', { tramite })}
+            activeOpacity={0.85}
+          >
+            <Text style={styles.cardTitle} numberOfLines={4} ellipsizeMode="tail">{tramite.nombre || tramite.titulo || `Trámite ${tramite.id || i+1}`}</Text>
+          </TouchableOpacity>
+        ))}
+      </View>
     </ScrollView>
   );
 }
 
 const styles = StyleSheet.create({
-  accordionItem: { marginHorizontal: 16, marginTop: 8,marginBottom: 8, borderRadius: 8, backgroundColor: '#f5f5f5' },
-  accordionTitle: { fontSize: 16, fontWeight: 'regular', padding: 12 },
-  accordionContent: { padding: 12, borderTopWidth: 1, borderColor: '#ccc' },
-  itemText: { fontSize: 14, marginBottom: 4 },
+  container: {
+    padding: CARD_MARGIN,
+    paddingTop: 25,
+    alignItems: 'center',
+    backgroundColor: '#fff',
+    minHeight: '100%',
+  },
+  grid: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    justifyContent: 'space-between',
+    width: '100%',
+    alignItems: 'flex-start',
+    backgroundColor: '#fff',
+  },
+  card: {
+    width: CARD_WIDTH,
+    backgroundColor: '#f5f5f5',
+    borderRadius: 10,
+    marginBottom: CARD_MARGIN,
+    marginHorizontal: CARD_MARGIN / 2,
+    padding: 16,
+    elevation: 2,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.08,
+    shadowRadius: 3,
+    alignItems: 'center',
+    justifyContent: 'center',
+    minHeight: 126,
+    height: 146,
+    flexGrow: 1,
+    width: '45%',
+  },
+  cardTitle: {
+    fontSize: 15,
+    fontWeight: 'bold',
+    color: '#1976d2',
+    textAlign: 'center',
+    flexWrap: 'wrap',
+    width: '100%',
+  },
 });

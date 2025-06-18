@@ -44,6 +44,12 @@ export default function AlumnosScreen({ navigation }) {
       <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('Calendario Academico')}>
         <Text style={styles.buttonText} numberOfLines={1} ellipsizeMode="tail">Calendario Académico</Text>
       </TouchableOpacity>
+      <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('ProgramasDepto')}>
+        <Text style={styles.buttonText} numberOfLines={1} ellipsizeMode="tail">Programas de asignatura</Text>
+      </TouchableOpacity>
+      <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('PlanesEstudio')}>
+        <Text style={styles.buttonText} numberOfLines={1} ellipsizeMode="tail">Planes de estudio</Text>
+      </TouchableOpacity>
     </View>
   );
 }

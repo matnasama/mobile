@@ -1,13 +1,31 @@
-import React, { useState } from 'react';
-import { View, Text, TouchableOpacity, StyleSheet, ScrollView } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { View, Text, TouchableOpacity, StyleSheet, ScrollView, ActivityIndicator } from 'react-native';
 
-export default function ConsultasScreen({ route }) {
-  const { data } = route.params;
+export default function ConsultasScreen() {
+  const [consultas, setConsultas] = useState([]);
   const [openIndex, setOpenIndex] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    fetch('https://raw.githubusercontent.com/matnasama/buscador-de-aulas/main/public/json/info/data.json')
+      .then(res => res.json())
+      .then(json => {
+        setConsultas(Array.isArray(json.consultas) ? json.consultas : []);
+        setLoading(false);
+      })
+      .catch(() => {
+        setError('Error al cargar las consultas');
+        setLoading(false);
+      });
+  }, []);
+
+  if (loading) return <ActivityIndicator size="large" color="#1976d2" style={{marginTop: 40}} />;
+  if (error) return <Text style={{color:'red', margin: 20}}>{error}</Text>;
 
   return (
     <ScrollView style={{ flex: 1 }}>
-      {Array.isArray(data) && data.map((item, idx) => {
+      {consultas.map((item, idx) => {
         const entries = Object.entries(item).filter(([key]) => key !== 'id' && key !== 'ID');
         const titulo = entries.length > 0 ? entries[0][1] : `Opción ${idx+1}`;
         return (

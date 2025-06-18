@@ -21,6 +21,13 @@ import BuscaAulaPorCarreraScreen from './screens/BuscaAulaPorCarreraScreen';
 import AsignaturasPorCarreraScreen from './screens/AsignaturasPorCarreraScreen';
 import SitioDetalleScreen from './screens/SitioDetalleScreen';
 import WebViewScreen from './screens/WebViewScreen';
+import ProgramasAsignaturaScreen from './screens/ProgramasAsignaturaScreen';
+import PlanesEstudioScreen from './screens/PlanesEstudioScreen';
+import ProgramasDeptoScreen from './screens/ProgramasDeptoScreen';
+import ProgramasCarreraScreen from './screens/ProgramasCarreraScreen';
+import TramiteDetalleScreen from './screens/TramiteDetalleScreen';
+import EmailScreen from './screens/EmailScreen';
+import EncontranosScreen from './screens/EncontranosScreen';
 
 const Tab = createBottomTabNavigator();
 const AlumnosStack = createStackNavigator();
@@ -39,6 +46,11 @@ function AlumnosStackScreen() {
       <AlumnosStack.Screen name="ComisionesAsignatura" component={ComisionesAsignaturaScreen} options={{ title: 'Comisiones' }} />
       <AlumnosStack.Screen name="Calendario Academico" component={CalendarioAcademicoScreen} />
       <AlumnosStack.Screen name="SitioDetalle" component={SitioDetalleScreen} options={{ title: 'Detalle del sitio' }} />
+      <AlumnosStack.Screen name="ProgramasDepto" component={ProgramasDeptoScreen} options={{ title: 'Programas de asignatura' }} />
+      <AlumnosStack.Screen name="ProgramasCarrera" component={ProgramasCarreraScreen} options={{ title: 'Carreras' }} />
+      <AlumnosStack.Screen name="ProgramasAsignatura" component={ProgramasAsignaturaScreen} options={{ title: 'Asignaturas' }} />
+      <AlumnosStack.Screen name="PlanesEstudio" component={PlanesEstudioScreen} options={{ title: 'Planes de estudio' }} />
+      <AlumnosStack.Screen name="TramiteDetalle" component={TramiteDetalleScreen} options={{ title: 'Detalle del trámite' }} />
     </AlumnosStack.Navigator>
   );
 }
@@ -85,6 +97,8 @@ function MainStackScreen() {
     <MainStack.Navigator screenOptions={{ headerShown: false }}>
       <MainStack.Screen name="Tabs" component={TabsScreen} />
       <MainStack.Screen name="WebViewScreen" component={WebViewScreen} options={{ title: 'Enlace' }} />
+      <MainStack.Screen name="EmailScreen" component={EmailScreen} options={{ title: 'Contacto' }} />
+      <MainStack.Screen name="EncontranosScreen" component={EncontranosScreen} options={{ title: 'Dónde estamos' }} />
     </MainStack.Navigator>
   );
 }
