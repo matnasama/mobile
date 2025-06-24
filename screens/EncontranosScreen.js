@@ -1,6 +1,7 @@
 import React from 'react';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import { WebView } from 'react-native-webview';
+import { Ionicons } from '@expo/vector-icons';
 
 const MAP_IFRAME = `
   <html>
@@ -17,9 +18,14 @@ const MAP_IFRAME = `
 export default function EncontranosScreen({ navigation }) {
   return (
     <View style={{flex:1, backgroundColor:'#fff'}}>
-      <Text style={styles.title}>Horario de atención</Text>
-      <Text style={styles.subtitle}>Lunes a Viernes de 9 a 19hs</Text>
-      <View style={{flex:1, minHeight:300}}>
+      <View style={{ height: 40 }} />
+      <TouchableOpacity style={styles.backButton} onPress={() => navigation.goBack()}
+        accessibilityLabel="Volver"
+        accessibilityHint="Regresa a la pantalla anterior"
+      >
+        <Ionicons name="arrow-back" size={28} color="#1976d2" />
+      </TouchableOpacity>
+      <View style={{flex:1, minHeight:300, padding: 16, paddingTop: 16}}>
         <WebView
           originWhitelist={["*"]}
           source={{ html: MAP_IFRAME }}
@@ -29,8 +35,11 @@ export default function EncontranosScreen({ navigation }) {
           startInLoadingState
         />
       </View>
-      <TouchableOpacity style={styles.cerrarBtn} onPress={() => navigation.goBack()}>
-        <Text style={styles.cerrarBtnText}>Cerrar</Text>
+      <TouchableOpacity style={styles.cerrarBtn} onPress={() => navigation.goBack()}
+        accessibilityLabel="Cerrar pantalla de ubicación"
+        accessibilityHint="Cierra la pantalla y regresa a la anterior"
+      >
+        <Text style={styles.cerrarBtnText} allowFontScaling={true}>Cerrar</Text>
       </TouchableOpacity>
     </View>
   );
@@ -52,7 +61,7 @@ const styles = StyleSheet.create({
   },
   cerrarBtn: {
     margin: 24,
-    backgroundColor:'#1976d2',
+    backgroundColor:'#384d9f',
     borderRadius:8,
     padding:14,
     alignItems:'center',
@@ -61,5 +70,12 @@ const styles = StyleSheet.create({
     color:'#fff',
     fontWeight:'bold',
     fontSize:16,
+  },
+  backButton: {
+    position: 'absolute',
+    top: 10,
+    left: 24,
+    zIndex: 100,
+    padding: 8,
   },
 });

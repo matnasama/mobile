@@ -3,7 +3,7 @@ import { StatusBar } from 'expo-status-bar';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { MaterialIcons, Ionicons, FontAwesome5 } from '@expo/vector-icons';
-import { Platform } from 'react-native';
+import { Platform, View } from 'react-native';
 import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
 import HomeScreen from './screens/HomeScreen';
 import AlumnosScreen from './screens/AlumnosScreen';
@@ -77,17 +77,57 @@ function TabsScreen() {
         tabBarStyle: {
           paddingBottom: Platform.OS === 'android' ? 0 : 0,
           paddingTop: 8,
-          height: Platform.OS === 'android' ? 70 : 90,
+          height: Platform.OS === 'android' ? 74 : 94, // +4px para la barra de colores
           borderTopWidth: 1,
           borderColor: '#eee',
           backgroundColor: '#fafafa',
         },
+        tabBarBackground: () => (
+          <View style={{ flex: 1 }}>
+            <View style={{ flexDirection: 'row', height: 4, width: '100%' }}>
+              <View style={{ flex: 1, backgroundColor: '#b5458d' }} />
+              <View style={{ flex: 1, backgroundColor: '#5aaa31' }} />
+              <View style={{ flex: 1, backgroundColor: '#66b2d6' }} />
+              <View style={{ flex: 1, backgroundColor: '#f59c00' }} />
+              <View style={{ flex: 1, backgroundColor: '#d32a17' }} />
+            </View>
+            <View style={{ flex: 1, backgroundColor: '#fafafa' }} />
+          </View>
+        ),
       })}
     >
-      <Tab.Screen name="Home" component={HomeScreen} />
-      <Tab.Screen name="Alumnos" component={AlumnosStackScreen} />
-      <Tab.Screen name="Novedades" component={NovedadesScreen} />
-      <Tab.Screen name="Ayuda" component={AyudaScreen} />
+      <Tab.Screen 
+        name="Home" 
+        component={HomeScreen} 
+        options={{
+          tabBarAccessibilityLabel: 'Inicio',
+          tabBarAccessibilityHint: 'Ir a la pantalla principal de inicio',
+        }}
+      />
+      <Tab.Screen 
+        name="Alumnos" 
+        component={AlumnosStackScreen} 
+        options={{
+          tabBarAccessibilityLabel: 'Alumnos',
+          tabBarAccessibilityHint: 'Ir a la sección de alumnos y trámites',
+        }}
+      />
+      <Tab.Screen 
+        name="Novedades" 
+        component={NovedadesScreen} 
+        options={{
+          tabBarAccessibilityLabel: 'Novedades',
+          tabBarAccessibilityHint: 'Ver novedades y noticias importantes',
+        }}
+      />
+      <Tab.Screen 
+        name="Ayuda" 
+        component={AyudaScreen} 
+        options={{
+          tabBarAccessibilityLabel: 'Ayuda',
+          tabBarAccessibilityHint: 'Acceder a la sección de ayuda y contacto',
+        }}
+      />
     </Tab.Navigator>
   );
 }

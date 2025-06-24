@@ -49,8 +49,11 @@ export default function ProgramasDeptoScreen({ navigation }) {
           style={[styles.button, { backgroundColor: dep.color }]}
           onPress={() => navigation.navigate('ProgramasCarrera', { depto: dep, data })}
           activeOpacity={0.85}
+          accessible={true}
+          accessibilityLabel={dep.nombre}
+          accessibilityHint="Seleccionar departamento para ver carreras y programas"
         >
-          <Text style={styles.buttonText}>{dep.nombre}</Text>
+          <Text style={styles.buttonText} allowFontScaling={true}>{dep.nombre}</Text>
         </TouchableOpacity>
       ))}
     </ScrollView>

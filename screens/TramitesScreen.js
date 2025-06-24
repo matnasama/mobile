@@ -34,8 +34,11 @@ export default function TramitesScreen({ navigation }) {
             style={styles.card}
             onPress={() => navigation.navigate('TramiteDetalle', { tramite })}
             activeOpacity={0.85}
+            accessible={true}
+            accessibilityLabel={tramite.nombre || tramite.titulo || `Trámite ${tramite.id || i+1}`}
+            accessibilityHint="Ver detalles del trámite seleccionado"
           >
-            <Text style={styles.cardTitle} numberOfLines={4} ellipsizeMode="tail">{tramite.nombre || tramite.titulo || `Trámite ${tramite.id || i+1}`}</Text>
+            <Text style={styles.cardTitle} numberOfLines={4} ellipsizeMode="tail" allowFontScaling={true}>{tramite.nombre || tramite.titulo || `Trámite ${tramite.id || i+1}`}</Text>
           </TouchableOpacity>
         ))}
       </View>
@@ -67,9 +70,9 @@ const styles = StyleSheet.create({
     marginHorizontal: CARD_MARGIN / 2,
     padding: 16,
     elevation: 2,
-    shadowColor: '#000',
+    shadowColor: '#0a2447',
     shadowOffset: { width: 0, height: 1 },
-    shadowOpacity: 0.08,
+    shadowOpacity: 0.18,
     shadowRadius: 3,
     alignItems: 'center',
     justifyContent: 'center',

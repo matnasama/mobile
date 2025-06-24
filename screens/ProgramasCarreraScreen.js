@@ -19,8 +19,11 @@ export default function ProgramasCarreraScreen({ route, navigation }) {
           style={[styles.button, { backgroundColor: depto.color }]}
           onPress={() => navigation.navigate('ProgramasAsignatura', { depto, carrera: nombreCarrera, data })}
           activeOpacity={0.85}
+          accessible={true}
+          accessibilityLabel={nombreCarrera}
+          accessibilityHint="Seleccionar carrera para ver programas de asignatura"
         >
-          <Text style={styles.buttonText}>{nombreCarrera}</Text>
+          <Text style={styles.buttonText} allowFontScaling={true}>{nombreCarrera}</Text>
         </TouchableOpacity>
       ))}
       {carrerasUnicas.length === 0 && <Text style={{marginTop: 30, color: '#888'}}>No hay carreras para este departamento.</Text>}

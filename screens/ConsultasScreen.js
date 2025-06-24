@@ -30,8 +30,13 @@ export default function ConsultasScreen() {
         const titulo = entries.length > 0 ? entries[0][1] : `Opción ${idx+1}`;
         return (
           <View key={idx} style={styles.accordionItem}>
-            <TouchableOpacity onPress={() => setOpenIndex(openIndex === idx ? null : idx)}>
-              <Text style={[styles.accordionTitle, {textTransform: 'uppercase'}]}>{titulo}</Text>
+            <TouchableOpacity 
+              onPress={() => setOpenIndex(openIndex === idx ? null : idx)}
+              accessible={true}
+              accessibilityLabel={titulo}
+              accessibilityHint="Expandir o contraer la consulta para ver más información"
+            >
+              <Text style={[styles.accordionTitle, {textTransform: 'uppercase'}]} allowFontScaling={true}>{titulo}</Text>
             </TouchableOpacity>
             {openIndex === idx && (
               <View style={styles.accordionContent}>

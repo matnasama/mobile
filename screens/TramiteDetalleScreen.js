@@ -84,8 +84,11 @@ export default function TramiteDetalleScreen({ route }) {
             return (
               <View key={idx}>
                 <Text style={styles.value}>{parte}</Text>
-                <TouchableOpacity style={styles.linkBtn} onPress={() => Linking.openURL(tramite['url-datos'])}>
-                  <Text style={styles.linkText}>DESCARGAR NOTA</Text>
+                <TouchableOpacity style={styles.linkBtn} onPress={() => Linking.openURL(tramite['url-datos'])}
+                  accessibilityLabel="Descargar nota por errores en el registro o cambios en DNI"
+                  accessibilityHint="Abre el PDF para descargar la nota correspondiente"
+                >
+                  <Text style={styles.linkText} allowFontScaling={true}>DESCARGAR NOTA</Text>
                 </TouchableOpacity>
               </View>
             );
@@ -94,8 +97,11 @@ export default function TramiteDetalleScreen({ route }) {
             return (
               <View key={idx}>
                 <Text style={styles.value}>{parte}</Text>
-                <TouchableOpacity style={styles.linkBtn} onPress={() => Linking.openURL(tramite['url-datos-genero'])}>
-                  <Text style={styles.linkText}>DESCARGAR NOTA</Text>
+                <TouchableOpacity style={styles.linkBtn} onPress={() => Linking.openURL(tramite['url-datos-genero'])}
+                  accessibilityLabel="Descargar nota por motivos de género sin cambio registral"
+                  accessibilityHint="Abre el PDF para descargar la nota correspondiente"
+                >
+                  <Text style={styles.linkText} allowFontScaling={true}>DESCARGAR NOTA</Text>
                 </TouchableOpacity>
               </View>
             );
@@ -104,8 +110,11 @@ export default function TramiteDetalleScreen({ route }) {
             return (
               <View key={idx}>
                 <Text style={styles.value}>{parte}</Text>
-                <TouchableOpacity style={styles.linkBtn} onPress={() => Linking.openURL(tramite['url-datos-sin-registral'])}>
-                  <Text style={styles.linkText}>DESCARGAR NOTA</Text>
+                <TouchableOpacity style={styles.linkBtn} onPress={() => Linking.openURL(tramite['url-datos-sin-registral'])}
+                  accessibilityLabel="Descargar nota por motivos de género con cambio registral"
+                  accessibilityHint="Abre el PDF para descargar la nota correspondiente"
+                >
+                  <Text style={styles.linkText} allowFontScaling={true}>DESCARGAR NOTA</Text>
                 </TouchableOpacity>
               </View>
             );
@@ -137,13 +146,19 @@ export default function TramiteDetalleScreen({ route }) {
         </View>
       )}
       {requisitos && urlrequisitos ? (
-        <TouchableOpacity onPress={() => Linking.openURL(urlrequisitos)} style={styles.linkBtn}>
-          <Text style={styles.linkText}>{(requisitos || '').toUpperCase()}</Text>
+        <TouchableOpacity onPress={() => Linking.openURL(urlrequisitos)} style={styles.linkBtn}
+          accessibilityLabel="Ver requisitos del trámite"
+          accessibilityHint="Abre el enlace con los requisitos para este trámite"
+        >
+          <Text style={styles.linkText} allowFontScaling={true}>{(requisitos || '').toUpperCase()}</Text>
         </TouchableOpacity>
       ) : null}
       {url && type ? (
-        <TouchableOpacity onPress={() => Linking.openURL(url)} style={styles.linkBtn}>
-          <Text style={styles.linkText}>{type === 'descargar' ? 'DESCARGAR' : type === 'ir al formulario' ? 'IR AL FORMULARIO' : 'VER ENLACE'}</Text>
+        <TouchableOpacity onPress={() => Linking.openURL(url)} style={styles.linkBtn}
+          accessibilityLabel={type === 'descargar' ? 'Descargar archivo relacionado al trámite' : type === 'ir al formulario' ? 'Ir al formulario del trámite' : 'Ver enlace relacionado al trámite'}
+          accessibilityHint={type === 'descargar' ? 'Descarga el archivo relacionado al trámite' : type === 'ir al formulario' ? 'Abre el formulario para completar el trámite' : 'Abre el enlace relacionado al trámite'}
+        >
+          <Text style={styles.linkText} allowFontScaling={true}>{type === 'descargar' ? 'DESCARGAR' : type === 'ir al formulario' ? 'IR AL FORMULARIO' : 'VER ENLACE'}</Text>
         </TouchableOpacity>
       ) : null}
       {/* Contactos de departamentos para equivalencias */}
@@ -154,8 +169,11 @@ export default function TramiteDetalleScreen({ route }) {
             return (
               <View key={idx} style={styles.contactoItem}>
                 <Text style={[styles.contactoNombre, {color: dep ? dep.color : '#1976d2', fontWeight: '500'}]}>{c.nombre.toUpperCase()}</Text>
-                <TouchableOpacity onPress={() => Linking.openURL(`mailto:${c.contacto}`)}>
-                  <Text style={styles.contactoMail}>{c.contacto}</Text>
+                <TouchableOpacity onPress={() => Linking.openURL(`mailto:${c.contacto}`)}
+                  accessibilityLabel={`Enviar correo a ${c.nombre}`}
+                  accessibilityHint={`Abre la aplicación de correo para enviar un email a ${c.contacto}`}
+                >
+                  <Text style={styles.contactoMail} allowFontScaling={true}>{c.contacto}</Text>
                 </TouchableOpacity>
               </View>
             );
@@ -198,12 +216,13 @@ const styles = StyleSheet.create({
     textAlign: 'left',
   },
   linkBtn: {
-    backgroundColor: '#1976d2',
+    backgroundColor: '#384d9f',
     borderRadius: 8,
     paddingVertical: 12,
     paddingHorizontal: 24,
     alignItems: 'center',
     alignSelf: 'center',
+    marginVertical: 8,
   },
   linkText: {
     color: '#fff',

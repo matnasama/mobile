@@ -23,8 +23,10 @@ export default function SitioDetalleScreen({ route }) {
             style={styles.campusBtn}
             onPress={() => Linking.openURL(sub.enlace)}
             activeOpacity={0.85}
+            accessibilityLabel={`Acceder a ${sub.nombre}`}
+            accessibilityHint={`Abre el campus virtual ${sub.nombre} en el navegador`}
           >
-            <Text style={styles.campusBtnText}>{sub.nombre}</Text>
+            <Text style={styles.campusBtnText} allowFontScaling={true}>{sub.nombre}</Text>
           </TouchableOpacity>
         ))}
         {/* Botón y acordeón para campus anteriores */}
@@ -34,9 +36,11 @@ export default function SitioDetalleScreen({ route }) {
               style={[styles.campusBtn, {flexDirection:'row', justifyContent:'center', alignItems:'center'}]}
               onPress={() => setShowAnteriores(!showAnteriores)}
               activeOpacity={0.85}
+              accessibilityLabel="Mostrar u ocultar campus anteriores"
+              accessibilityHint="Despliega o esconde la lista de campus virtuales de años anteriores"
             >
-              <Text style={styles.campusBtnText}>Campus anteriores</Text>
-              <Text style={{color:'#fff', fontSize:18, marginLeft:8}}>{showAnteriores ? '▲' : '▼'}</Text>
+              <Text style={styles.campusBtnText} allowFontScaling={true}>Campus anteriores</Text>
+              <Text style={{color:'#fff', fontSize:18, marginLeft:8}} allowFontScaling={true}>{showAnteriores ? '▲' : '▼'}</Text>
             </TouchableOpacity>
             {showAnteriores && (
               <View style={{width:'100%', marginTop:4}}>
@@ -46,8 +50,10 @@ export default function SitioDetalleScreen({ route }) {
                     style={[styles.campusBtn, {backgroundColor:'#4e6fae', marginVertical:4}]}
                     onPress={() => Linking.openURL(sub.enlace)}
                     activeOpacity={0.85}
+                    accessibilityLabel={`Acceder a ${sub.nombre}`}
+                    accessibilityHint={`Abre el campus virtual ${sub.nombre} en el navegador`}
                   >
-                    <Text style={styles.campusBtnText}>{sub.nombre}</Text>
+                    <Text style={styles.campusBtnText} allowFontScaling={true}>{sub.nombre}</Text>
                   </TouchableOpacity>
                 ))}
               </View>
@@ -78,7 +84,7 @@ const styles = StyleSheet.create({
   title: { fontSize: 22, fontWeight: 'bold', marginBottom: 12, textAlign: 'center' },
   text: { fontSize: 16, marginBottom: 8, textAlign: 'center' },
   campusBtn: {
-    backgroundColor: '#1976d2',
+    backgroundColor: '#384d9f',
     borderRadius: 8,
     paddingVertical: 14,
     paddingHorizontal: 24,

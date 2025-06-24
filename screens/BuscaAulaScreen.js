@@ -188,16 +188,20 @@ export default function BuscaAulaScreen() {
       <View style={[styles.container, {backgroundColor: '#fff', justifyContent: 'center', alignItems: 'center'}]}>
         <Text style={styles.title}>¿Cómo querés buscar tu aula?</Text>
         <TouchableOpacity
-          style={[styles.resultItem, {marginBottom: 20, backgroundColor: '#0a2447', width: 260}]}
+          style={[styles.resultItem, {marginBottom: 20, backgroundColor: '#384d9f', width: 260}]}
           onPress={() => setOpcion('codigo')}
+          accessibilityLabel="Buscar aula por código de comisión"
+          accessibilityHint="Permite buscar el aula ingresando el código de la comisión"
         >
-          <Text style={{color:'#fff', fontWeight:'bold', fontSize:18, textAlign:'center'}}>Buscar por código</Text>
+          <Text style={{color:'#fff', fontWeight:'bold', fontSize:18, textAlign:'center'}} allowFontScaling={true}>Buscar por código</Text>
         </TouchableOpacity>
         <TouchableOpacity
-          style={[styles.resultItem, {backgroundColor: '#0a2447', width: 260}]}
+          style={[styles.resultItem, {backgroundColor: '#384d9f', width: 260}]}
           onPress={() => setOpcion('carrera')}
+          accessibilityLabel="Buscar aula por carrera"
+          accessibilityHint="Permite buscar el aula seleccionando la carrera y asignatura"
         >
-          <Text style={{color:'#fff', fontWeight:'bold', fontSize:18, textAlign:'center'}}>Buscar por carrera</Text>
+          <Text style={{color:'#fff', fontWeight:'bold', fontSize:18, textAlign:'center'}} allowFontScaling={true}>Buscar por carrera</Text>
         </TouchableOpacity>
       </View>
     );
@@ -218,7 +222,8 @@ export default function BuscaAulaScreen() {
           <TouchableOpacity
             onPress={() => setQuery('')}
             style={{flex: 1, alignItems:'center', justifyContent:'center', height: 44, backgroundColor: '#f5f5f5', borderRadius: 8, minWidth: 44}}
-            accessibilityLabel="Limpiar filtro"
+            accessibilityLabel="Limpiar filtro de búsqueda"
+            accessibilityHint="Borra el texto ingresado en el campo de búsqueda"
             activeOpacity={0.7}
           >
             <Svg width={22} height={22} viewBox="0 0 24 24" fill="none" stroke="#1976d2" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round">
@@ -234,9 +239,11 @@ export default function BuscaAulaScreen() {
             <TouchableOpacity
               style={styles.resultItem}
               onPress={() => navigation.navigate('ComisionesAsignatura', { asignatura: item })}
+              accessibilityLabel={`Ver comisiones de la asignatura ${item["Asignatura-Actividad"]}`}
+              accessibilityHint={`Muestra las comisiones disponibles para la asignatura ${item["Asignatura-Actividad"]}`}
             >
-              <Text style={{fontWeight:'bold', fontSize:16}}>{item["Asignatura-Actividad"]}</Text>
-              <Text style={{color:'#888'}}>Código: {item["Código"]}</Text>
+              <Text style={{fontWeight:'bold', fontSize:16}} allowFontScaling={true}>{item["Asignatura-Actividad"]}</Text>
+              <Text style={{color:'#888'}} allowFontScaling={true}>Código: {item["Código"]}</Text>
             </TouchableOpacity>
           )}
           ListEmptyComponent={<Text style={styles.noResult}>No se encontraron asignaturas.</Text>}
@@ -277,8 +284,10 @@ export default function BuscaAulaScreen() {
               marginBottom: 20
             }]}
             onPress={() => setDepartamentoSeleccionado(dep)}
+            accessibilityLabel={`Seleccionar departamento ${dep.nombre}`}
+            accessibilityHint={`Ver carreras del departamento ${dep.nombre}`}
           >
-            <Text style={{color: '#fff', fontWeight:'bold', fontSize:16, textAlign:'center'}}>{dep.nombre}</Text>
+            <Text style={{color: '#fff', fontWeight:'bold', fontSize:16, textAlign:'center'}} allowFontScaling={true}>{dep.nombre}</Text>
           </TouchableOpacity>
         ))}
       </View>
@@ -313,8 +322,10 @@ export default function BuscaAulaScreen() {
                 borderWidth: 0
               }]}
               onPress={() => navigation.navigate('AsignaturasPorCarrera', { carrera: item })}
+              accessibilityLabel={`Seleccionar carrera ${item.carrera}`}
+              accessibilityHint={`Ver asignaturas de la carrera ${item.carrera}`}
             >
-              <Text style={{color: '#fff', fontWeight:'bold', fontSize:16, textAlign:'center'}}>{item.carrera}</Text>
+              <Text style={{color: '#fff', fontWeight:'bold', fontSize:16, textAlign:'center'}} allowFontScaling={true}>{item.carrera}</Text>
             </TouchableOpacity>
           )}
         />

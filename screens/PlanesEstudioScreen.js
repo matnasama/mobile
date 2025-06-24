@@ -78,8 +78,11 @@ export default function PlanesEstudioScreen({ navigation }) {
             style={[styles.button, styles.buttonDepto, { backgroundColor: dep.color }]}
             onPress={() => setDepto(dep)}
             activeOpacity={0.85}
+            accessible={true}
+            accessibilityLabel={dep.nombre}
+            accessibilityHint="Seleccionar departamento para ver carreras y planes de estudio"
           >
-            <Text style={styles.buttonText}>{dep.nombre}</Text>
+            <Text style={styles.buttonText} allowFontScaling={true}>{dep.nombre}</Text>
           </TouchableOpacity>
         ))}
       </ScrollView>
@@ -104,17 +107,26 @@ export default function PlanesEstudioScreen({ navigation }) {
                 style={[styles.button, styles.buttonCarrera, { backgroundColor: depto.color }]}
                 onPress={() => setExpandedIdx(expandedIdx === idx ? null : idx)}
                 activeOpacity={0.85}
+                accessible={true}
+                accessibilityLabel={nombreCarrera}
+                accessibilityHint="Expandir para ver el plan de estudios de la carrera"
               >
-                <Text style={styles.buttonText}>{nombreCarrera}</Text>
+                <Text style={styles.buttonText} allowFontScaling={true}>{nombreCarrera}</Text>
               </TouchableOpacity>
               {expandedIdx === idx && urlValida && (
                 <View style={styles.card}>
                   <Text style={styles.cardTitle}>Plan de estudios</Text>
-                  <TouchableOpacity style={styles.downloadBtn} onPress={() => {
-                    const urlCompleta = planUrl.startsWith('http') ? planUrl : `https://www.unm.edu.ar${planUrl}`;
-                    Linking.openURL(urlCompleta);
-                  }}>
-                    <Text style={styles.downloadBtnText}>Descargar PDF</Text>
+                  <TouchableOpacity 
+                    style={styles.downloadBtn} 
+                    onPress={() => {
+                      const urlCompleta = planUrl.startsWith('http') ? planUrl : `https://www.unm.edu.ar${planUrl}`;
+                      Linking.openURL(urlCompleta);
+                    }}
+                    accessible={true}
+                    accessibilityLabel="Descargar PDF del plan de estudios"
+                    accessibilityHint="Descarga el archivo PDF del plan de estudios de la carrera seleccionada"
+                  >
+                    <Text style={styles.downloadBtnText} allowFontScaling={true}>Descargar PDF</Text>
                   </TouchableOpacity>
                 </View>
               )}

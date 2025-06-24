@@ -27,12 +27,18 @@ export default function CalendarioAcademicoScreen() {
     <ScrollView style={{ flex: 1, backgroundColor: '#fff' }} contentContainerStyle={{ padding: 16 }}>
       {Array.isArray(data) && data.map((item, idx) => (
         <View key={idx} style={styles.accordionItem}>
-          <TouchableOpacity onPress={() => setOpenIndex(openIndex === idx ? null : idx)} style={styles.accordionTitleBox} activeOpacity={0.8}>
-            <Text style={styles.accordionTitle}>{item.actividad || `Evento ${idx+1}`}</Text>
+          <TouchableOpacity
+            onPress={() => setOpenIndex(openIndex === idx ? null : idx)}
+            style={styles.accordionTitleBox}
+            activeOpacity={0.8}
+            accessibilityLabel={`Ver detalles de la actividad: ${item.actividad || `Evento ${idx+1}`}`}
+            accessibilityHint="Muestra u oculta la información de la actividad seleccionada"
+          >
+            <Text style={styles.accordionTitle} allowFontScaling={true}>{item.actividad || `Evento ${idx+1}`}</Text>
           </TouchableOpacity>
           {openIndex === idx && (
             <View style={styles.accordionContent}>
-              <Text style={styles.accordionText}>{item.periodo || 'Sin fecha'}</Text>
+              <Text style={styles.accordionText} allowFontScaling={true}>{item.periodo || 'Sin fecha'}</Text>
             </View>
           )}
         </View>
@@ -55,7 +61,7 @@ const styles = StyleSheet.create({
   },
   accordionTitleBox: {
     padding: 16,
-    backgroundColor: '#1976d2',
+    backgroundColor: '#384d9f',
   },
   accordionTitle: {
     color: '#fff',

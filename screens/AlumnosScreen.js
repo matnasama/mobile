@@ -25,30 +25,78 @@ export default function AlumnosScreen({ navigation }) {
   if (!alumnosData) return null;
 
   return (
-    <View style={{width:'100%', flex:1, justifyContent:'center', alignItems:'center'}}>
-      <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('Tramites', { data: alumnosData.tramites })}>
-        <Text style={styles.buttonText} numberOfLines={1} ellipsizeMode="tail">Trámites</Text>
+    <View style={{width:'100%', flex:1, justifyContent:'center', alignItems:'center', backgroundColor:'#fff'}}>
+      <TouchableOpacity
+        style={styles.button}
+        onPress={() => navigation.navigate('Tramites', { data: alumnosData.tramites })}
+        accessible={true}
+        accessibilityLabel="Trámites"
+        accessibilityHint="Ver y gestionar trámites de alumnos"
+      >
+        <Text style={styles.buttonText} numberOfLines={1} ellipsizeMode="tail" allowFontScaling={true}>Trámites</Text>
       </TouchableOpacity>
-      <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('Consultas', { data: alumnosData.consultas })}>
-        <Text style={styles.buttonText} numberOfLines={1} ellipsizeMode="tail">Consultas</Text>
+      <TouchableOpacity
+        style={styles.button}
+        onPress={() => navigation.navigate('Consultas', { data: alumnosData.consultas })}
+        accessible={true}
+        accessibilityLabel="Consultas"
+        accessibilityHint="Ver consultas frecuentes de alumnos"
+      >
+        <Text style={styles.buttonText} numberOfLines={1} ellipsizeMode="tail" allowFontScaling={true}>Consultas</Text>
       </TouchableOpacity>
-      <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('Sitios', { data: alumnosData.sitios })}>
-        <Text style={styles.buttonText} numberOfLines={1} ellipsizeMode="tail">Sitios</Text>
+      <TouchableOpacity
+        style={styles.button}
+        onPress={() => navigation.navigate('Sitios', { data: alumnosData.sitios })}
+        accessible={true}
+        accessibilityLabel="Sitios"
+        accessibilityHint="Ver sitios y enlaces útiles para alumnos"
+      >
+        <Text style={styles.buttonText} numberOfLines={1} ellipsizeMode="tail" allowFontScaling={true}>Sitios</Text>
       </TouchableOpacity>
-      <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('Reglamentos')}>
-        <Text style={styles.buttonText} numberOfLines={1} ellipsizeMode="tail">Reglamento</Text>
+      <TouchableOpacity
+        style={styles.button}
+        onPress={() => navigation.navigate('Reglamentos')}
+        accessible={true}
+        accessibilityLabel="Reglamento"
+        accessibilityHint="Ver reglamento de alumnos"
+      >
+        <Text style={styles.buttonText} numberOfLines={1} ellipsizeMode="tail" allowFontScaling={true}>Reglamento</Text>
       </TouchableOpacity>
-      <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('Busca tu aula', { reset: true })}>
-        <Text style={styles.buttonText} numberOfLines={1} ellipsizeMode="tail">Busca tu aula</Text>
+      <TouchableOpacity
+        style={styles.button}
+        onPress={() => navigation.navigate('Busca tu aula', { reset: true })}
+        accessible={true}
+        accessibilityLabel="Busca tu aula"
+        accessibilityHint="Buscar el aula asignada para tus materias"
+      >
+        <Text style={styles.buttonText} numberOfLines={1} ellipsizeMode="tail" allowFontScaling={true}>Busca tu aula</Text>
       </TouchableOpacity>
-      <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('Calendario Academico')}>
-        <Text style={styles.buttonText} numberOfLines={1} ellipsizeMode="tail">Calendario Académico</Text>
+      <TouchableOpacity
+        style={styles.button}
+        onPress={() => navigation.navigate('Calendario Academico')}
+        accessible={true}
+        accessibilityLabel="Calendario Académico"
+        accessibilityHint="Ver el calendario académico de la universidad"
+      >
+        <Text style={styles.buttonText} numberOfLines={1} ellipsizeMode="tail" allowFontScaling={true}>Calendario Académico</Text>
       </TouchableOpacity>
-      <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('ProgramasDepto')}>
-        <Text style={styles.buttonText} numberOfLines={1} ellipsizeMode="tail">Programas de asignatura</Text>
+      <TouchableOpacity
+        style={styles.button}
+        onPress={() => navigation.navigate('ProgramasDepto')}
+        accessible={true}
+        accessibilityLabel="Programas de asignatura"
+        accessibilityHint="Ver programas de asignaturas por departamento"
+      >
+        <Text style={styles.buttonText} numberOfLines={1} ellipsizeMode="tail" allowFontScaling={true}>Programas de asignatura</Text>
       </TouchableOpacity>
-      <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('PlanesEstudio')}>
-        <Text style={styles.buttonText} numberOfLines={1} ellipsizeMode="tail">Planes de estudio</Text>
+      <TouchableOpacity
+        style={styles.button}
+        onPress={() => navigation.navigate('PlanesEstudio')}
+        accessible={true}
+        accessibilityLabel="Planes de estudio"
+        accessibilityHint="Ver los planes de estudio disponibles"
+      >
+        <Text style={styles.buttonText} numberOfLines={1} ellipsizeMode="tail" allowFontScaling={true}>Planes de estudio</Text>
       </TouchableOpacity>
     </View>
   );
@@ -56,7 +104,7 @@ export default function AlumnosScreen({ navigation }) {
 
 const styles = StyleSheet.create({
   button: {
-    backgroundColor: '#1976d2',
+    backgroundColor: '#384d9f',
     paddingVertical: 16,
     paddingHorizontal: 28,
     borderRadius: 10,

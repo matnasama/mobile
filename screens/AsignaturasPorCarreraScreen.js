@@ -28,9 +28,11 @@ export default function AsignaturasPorCarreraScreen() {
                 carreraNombre: carrera.carrera,
               }
             })}
+            accessibilityLabel={`Ver comisiones de la asignatura ${item["Asignatura-Actividad"]}`}
+            accessibilityHint={`Muestra las comisiones disponibles para la asignatura ${item["Asignatura-Actividad"]}`}
           >
-            <Text style={{fontWeight:'bold', fontSize:16}}>{item["Asignatura-Actividad"]}</Text>
-            <Text style={{color:'#888'}}>Código: {item["Código"]}</Text>
+            <Text style={{fontWeight:'bold', fontSize:16}} allowFontScaling={true}>{item["Asignatura-Actividad"]}</Text>
+            <Text style={{color:'#888'}} allowFontScaling={true}>Código: {item["Código"]}</Text>
           </TouchableOpacity>
         )}
         ListEmptyComponent={<Text style={styles.noResult}>No se encontraron asignaturas.</Text>}

@@ -11,6 +11,8 @@ export default function WebViewScreen({ route }) {
         style={styles.webview}
         startInLoadingState
         renderLoading={() => <ActivityIndicator size="large" color="#1976d2" style={{marginTop: 40}} />}
+        accessibilityLabel="Contenido web"
+        accessibilityHint="Visualiza el contenido web externo en la aplicación"
       />
     </View>
   );

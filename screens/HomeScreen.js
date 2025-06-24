@@ -15,11 +15,16 @@ export default function HomeScreen() {
   return (
     <ScrollView style={{ flex: 1, backgroundColor: '#fff' }} contentContainerStyle={styles.container}>
       {images.map((img, idx) => (
-        <TouchableOpacity key={idx} onPress={() => navigation.navigate('WebViewScreen', { url: img.url })} activeOpacity={0.85}>
+        <TouchableOpacity key={idx} onPress={() => navigation.navigate('WebViewScreen', { url: img.url })} activeOpacity={0.85}
+          accessibilityLabel={`Abrir noticia ${idx+1}`}
+          accessibilityHint="Abre el enlace de la noticia en una nueva pantalla"
+        >
           <Image
             source={img.src}
             style={styles.image}
             resizeMode="cover"
+            accessibilityLabel={`Imagen de la noticia ${idx+1}`}
+            accessibilityHint="Imagen ilustrativa de la noticia"
           />
         </TouchableOpacity>
       ))}

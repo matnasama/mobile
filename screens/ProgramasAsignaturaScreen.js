@@ -20,8 +20,13 @@ export default function ProgramasAsignaturaScreen({ route }) {
             <Text style={styles.cardText}><Text style={styles.cardLabel}>Ciclo lectivo:</Text> {materia.ciclo_lectivo}</Text>
             <Text style={styles.cardText}><Text style={styles.cardLabel}>Resolución:</Text> {materia.resolucion}</Text>
             {typeof materia.url === 'string' && materia.url.trim() !== '' && (
-              <TouchableOpacity style={styles.downloadBtn} onPress={() => Linking.openURL(materia.url)}>
-                <Text style={styles.downloadBtnText}>Descargar</Text>
+              <TouchableOpacity
+                style={styles.downloadBtn}
+                onPress={() => Linking.openURL(materia.url)}
+                accessibilityLabel={`Descargar programa de ${materia.materia}`}
+                accessibilityHint={`Abre el PDF del programa de la materia ${materia.materia} en el navegador`}
+              >
+                <Text style={styles.downloadBtnText} allowFontScaling={true}>Descargar</Text>
               </TouchableOpacity>
             )}
           </View>
@@ -75,7 +80,7 @@ const styles = StyleSheet.create({
   },
   downloadBtn: {
     marginTop: 10,
-    backgroundColor: '#1976d2',
+    backgroundColor: '#384d9f',
     borderRadius: 8,
     paddingVertical: 10,
     alignItems: 'center',

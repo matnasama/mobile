@@ -6,7 +6,7 @@ export default function SitiosScreen({ navigation }) {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   // Base URL de imágenes
-  const baseUrl = 'https://raw.githubusercontent.com/matnasama/depto-alumnos/5fb38fcb1f2c80d345780ed1461100bb7b15023b/public/';
+  const baseUrl = 'https://raw.githubusercontent.com/matnasama/mobile/db317d25616a0c8ca907e66cf2f21dfb597a51ce/assets/';
   const imageStyle = {
     width: '90%',
     height: 150,
@@ -43,8 +43,11 @@ export default function SitiosScreen({ navigation }) {
             style={styles.gridItem}
             onPress={() => navigation.navigate('SitioDetalle', { sitio: item })}
             activeOpacity={0.8}
+            accessible={true}
+            accessibilityLabel={item.nombre || item.titulo || `Sitio ${idx+1}`}
+            accessibilityHint="Ver detalles del sitio seleccionado"
           >
-            <Image source={{ uri: imagenUrl }} style={imageStyle} resizeMode="contain" />
+            <Image source={{ uri: imagenUrl }} style={imageStyle} resizeMode="contain" accessibilityLabel={item.nombre || item.titulo || `Imagen del sitio ${idx+1}`}/>
           </TouchableOpacity>
         ) : null;
       })}

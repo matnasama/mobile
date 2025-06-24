@@ -13,15 +13,20 @@ export default function ComisionesAsignaturaScreen({ route }) {
         data={comisiones}
         keyExtractor={(_, idx) => String(idx)}
         renderItem={({ item }) => (
-          <View style={styles.comisionItem}>
-            <Text style={{fontWeight:'bold'}}>Comisión: {item["Comisión"]}</Text>
-            {item["Docente/s (1)"] && <Text>Docente: {item["Docente/s (1)"]}</Text>}
-            {item["Día/s y horario/s"] && <Text>Día y horario: {item["Día/s y horario/s"]}</Text>}
-            {item["Turno"] && <Text>Turno: {item["Turno"]}</Text>}
-            {item["Aula/s"] && <Text>Aula: {item["Aula/s"]}</Text>}
-            {item["Aula"] && <Text>Aula: {item["Aula"]}</Text>}
-            {item["Modalidad Cursada"] && <Text>Modalidad: {item["Modalidad Cursada"]}</Text>}
-            {item["Clase presencial"] && <Text>Clase presencial: {item["Clase presencial"]}</Text>}
+          <View
+            style={styles.comisionItem}
+            accessible={true}
+            accessibilityLabel={`Comisión ${item["Comisión"]}, Docente: ${item["Docente/s (1)"] || 'No especificado'}, Día y horario: ${item["Día/s y horario/s"] || 'No especificado'}`}
+            accessibilityHint="Información detallada de la comisión de la asignatura"
+          >
+            <Text style={{fontWeight:'bold'}} allowFontScaling={true}>Comisión: {item["Comisión"]}</Text>
+            {item["Docente/s (1)"] && <Text allowFontScaling={true}>Docente: {item["Docente/s (1)"]}</Text>}
+            {item["Día/s y horario/s"] && <Text allowFontScaling={true}>Día y horario: {item["Día/s y horario/s"]}</Text>}
+            {item["Turno"] && <Text allowFontScaling={true}>Turno: {item["Turno"]}</Text>}
+            {item["Aula/s"] && <Text allowFontScaling={true}>Aula: {item["Aula/s"]}</Text>}
+            {item["Aula"] && <Text allowFontScaling={true}>Aula: {item["Aula"]}</Text>}
+            {item["Modalidad Cursada"] && <Text allowFontScaling={true}>Modalidad: {item["Modalidad Cursada"]}</Text>}
+            {item["Clase presencial"] && <Text allowFontScaling={true}>Clase presencial: {item["Clase presencial"]}</Text>}
           </View>
         )}
         ListEmptyComponent={<Text style={styles.noResult}>No hay comisiones para esta asignatura.</Text>}

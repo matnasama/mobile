@@ -48,9 +48,11 @@ export default function BuscaAulaPorCarreraScreen() {
           <TouchableOpacity
             style={styles.carreraItem}
             onPress={() => navigation.navigate('AsignaturasPorCarrera', { carrera: item })}
+            accessibilityLabel={`Seleccionar carrera ${item.carrera}`}
+            accessibilityHint={`Ver asignaturas de la carrera ${item.carrera}`}
           >
-            <Text style={{fontWeight:'bold', fontSize:16}}>{item.carrera}</Text>
-            <Text style={{color:'#888'}}>Departamento: {item.depto}</Text>
+            <Text style={{fontWeight:'bold', fontSize:16}} allowFontScaling={true}>{item.carrera}</Text>
+            <Text style={{color:'#888'}} allowFontScaling={true}>Departamento: {item.depto}</Text>
           </TouchableOpacity>
         )}
         ListEmptyComponent={<Text style={styles.noResult}>No se encontraron carreras.</Text>}
@@ -63,7 +65,7 @@ const styles = StyleSheet.create({
   container: { flex: 1, padding: 20, backgroundColor: '#fff' },
   title: { fontSize: 22, fontWeight: 'bold', marginBottom: 16, textAlign: 'center' },
   carreraItem: {
-    backgroundColor: '#f5f5f5',
+    backgroundColor: '#384d9f',
     borderRadius: 8,
     padding: 14,
     marginBottom: 12,

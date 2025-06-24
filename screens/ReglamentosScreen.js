@@ -12,6 +12,9 @@ export default function ReglamentosScreen() {
         style={styles.webview}
         startInLoadingState
         renderLoading={() => <ActivityIndicator size="large" color="#1976d2" style={{marginTop: 40}} />}
+        accessible={true}
+        accessibilityLabel="Reglamento de alumnos en PDF"
+        accessibilityHint="Visualiza el reglamento de alumnos en formato PDF. Usa gestos de desplazamiento para navegar."
       />
     </View>
   );
