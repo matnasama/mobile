@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, TouchableOpacity, StyleSheet, ScrollView, Image, ActivityIndicator } from 'react-native';
+import { View, Text, TouchableOpacity, StyleSheet, ScrollView, Image, ActivityIndicator, Linking } from 'react-native';
 
 export default function SitiosScreen({ navigation }) {
   const [sitios, setSitios] = useState([]);
@@ -37,15 +37,33 @@ export default function SitiosScreen({ navigation }) {
         const imagenKey = Object.keys(item).find(k => k.toLowerCase().includes('imagen'));
         const imagenPath = imagenKey ? item[imagenKey] : null;
         const imagenUrl = imagenPath ? (imagenPath.startsWith('http') ? imagenPath : baseUrl + imagenPath) : null;
-        return imagenUrl ? (
+        // Si es campus virtual, navega como antes
+        if ((item.nombre || '').toLowerCase().includes('campus virtual')) {
+          return imagenUrl ? (
+            <TouchableOpacity
+              key={idx}
+              style={styles.gridItem}
+              onPress={() => navigation.navigate('SitioDetalle', { sitio: item })}
+              activeOpacity={0.8}
+              accessible={true}
+              accessibilityLabel={item.nombre || item.titulo || `Sitio ${idx+1}`}
+              accessibilityHint="Ver detalles del sitio seleccionado"
+            >
+              <Image source={{ uri: imagenUrl }} style={imageStyle} resizeMode="contain" accessibilityLabel={item.nombre || item.titulo || `Imagen del sitio ${idx+1}`}/>
+            </TouchableOpacity>
+          ) : null;
+        }
+        // Para los demás, redirige a la url externa
+        const url = item.enlace || item.url || item.link;
+        return imagenUrl && url ? (
           <TouchableOpacity
             key={idx}
             style={styles.gridItem}
-            onPress={() => navigation.navigate('SitioDetalle', { sitio: item })}
+            onPress={() => url && Linking.openURL(url)}
             activeOpacity={0.8}
             accessible={true}
             accessibilityLabel={item.nombre || item.titulo || `Sitio ${idx+1}`}
-            accessibilityHint="Ver detalles del sitio seleccionado"
+            accessibilityHint="Abre el sitio web en el navegador"
           >
             <Image source={{ uri: imagenUrl }} style={imageStyle} resizeMode="contain" accessibilityLabel={item.nombre || item.titulo || `Imagen del sitio ${idx+1}`}/>
           </TouchableOpacity>

@@ -28,6 +28,7 @@ import ProgramasCarreraScreen from './screens/ProgramasCarreraScreen';
 import TramiteDetalleScreen from './screens/TramiteDetalleScreen';
 import EmailScreen from './screens/EmailScreen';
 import EncontranosScreen from './screens/EncontranosScreen';
+import CorrelatividadesScreen from './screens/CorrelatividadesScreen';
 
 const Tab = createBottomTabNavigator();
 const AlumnosStack = createStackNavigator();
@@ -51,6 +52,7 @@ function AlumnosStackScreen() {
       <AlumnosStack.Screen name="ProgramasAsignatura" component={ProgramasAsignaturaScreen} options={{ title: 'Asignaturas' }} />
       <AlumnosStack.Screen name="PlanesEstudio" component={PlanesEstudioScreen} options={{ title: 'Planes de estudio' }} />
       <AlumnosStack.Screen name="TramiteDetalle" component={TramiteDetalleScreen} options={{ title: 'Detalle del trámite' }} />
+      <AlumnosStack.Screen name="Correlatividades" component={CorrelatividadesScreen} options={{ title: 'Correlatividades' }} />
     </AlumnosStack.Navigator>
   );
 }

@@ -89,15 +89,17 @@ export default function EmailScreen({ navigation }) {
       <Text style={styles.title}>¿No encontrás respuesta a tu duda?</Text>
       <Text style={styles.text}>Completá el siguiente formulario y tu consulta será enviada por mail a <Text style={styles.email}>alumnos@unm.edu.ar</Text>.</Text>
       <TextInput
-        style={styles.input}
+        style={[styles.input, {backgroundColor: '#fff', color: '#222', borderColor: '#384d9f', borderWidth: 1}]}
         placeholder="Número de documento"
+        placeholderTextColor="#888"
         value={dni}
         onChangeText={text => setDni(text.replace(/\./g, ''))}
         keyboardType="numeric"
       />
       <TextInput
-        style={styles.input}
+        style={[styles.input, {backgroundColor: '#fff', color: '#222', borderColor: '#384d9f', borderWidth: 1}]}
         placeholder="Nombre y apellido"
+        placeholderTextColor="#888"
         value={nombre}
         onChangeText={setNombre}
       />
@@ -148,8 +150,9 @@ export default function EmailScreen({ navigation }) {
         </View>
       )}
       <TextInput
-        style={[styles.input, {height: 100, textAlignVertical: 'top'}]}
+        style={[styles.input, {height: 100, textAlignVertical: 'top', backgroundColor: '#fff', color: '#222', borderColor: '#384d9f', borderWidth: 1}]}
         placeholder="Detalle tu consulta"
+        placeholderTextColor="#888"
         value={consulta}
         onChangeText={setConsulta}
         multiline

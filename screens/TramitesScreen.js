@@ -13,7 +13,16 @@ export default function TramitesScreen({ navigation }) {
     fetch('https://raw.githubusercontent.com/matnasama/buscador-de-aulas/main/public/json/info/data.json')
       .then(res => res.json())
       .then(json => {
-        setTramites(Array.isArray(json.tramites) ? json.tramites : []);
+        let tramitesArr = Array.isArray(json.tramites) ? json.tramites : [];
+        // Agregar Correlatividades si no existe
+        if (!tramitesArr.some(t => (t.nombre || '').toLowerCase().includes('correlatividades'))) {
+          tramitesArr.push({
+            id: 'correlatividades',
+            nombre: 'Correlatividades',
+            descripcion: 'Información sobre correlatividades: Las correlatividades definen qué materias deben aprobarse o regularizarse antes de cursar o rendir otras. Consultá el plan de estudios de tu carrera para más detalles.'
+          });
+        }
+        setTramites(tramitesArr);
         setLoading(false);
       })
       .catch(() => {

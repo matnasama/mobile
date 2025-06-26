@@ -110,23 +110,50 @@ export default function BuscaAulaScreen() {
     );
   };
 
-  // Unificar todas las asignaturas de todas las carreras, omitiendo solo las del cuatrimestre 2
+  // Unificar todas las asignaturas de todas las carreras, deduplicando por código
   const asignaturasRaw = aulasPorDepto.flatMap(arr =>
     (arr || []).flatMap(carreraObj =>
-      (carreraObj.asignaturas || [])
-        .filter(asig => asig["Cuatrimestre"] != 2 && asig["Cuatrimestre"] != "2")
-        .map(asig => ({
-          carreraCodigo: carreraObj.codigo,
-          carreraNombre: carreraObj.carrera,
-          ...asig,
-        }))
+      (carreraObj.asignaturas || []).map(asig => ({
+        carreraCodigo: carreraObj.codigo,
+        carreraNombre: carreraObj.carrera,
+        ...asig,
+      }))
     )
+  );
+
+  // Deduplicar: si hay string en Cuatrimestre, priorizar esa; si no, tomar la de menor cuatrimestre numérico
+  const asignaturasUnicas = Object.values(
+    asignaturasRaw.reduce((acc, asig) => {
+      const codigo = asig["Código"];
+      if (!codigo) return acc;
+      const actual = acc[codigo];
+      const cuatr = asig["Cuatrimestre"];
+      // Si no hay nada, guardar
+      if (!actual) {
+        acc[codigo] = asig;
+      } else {
+        const actualCuatr = actual["Cuatrimestre"];
+        // Si el nuevo es string y el actual no, priorizar string
+        if (typeof cuatr === 'string' && typeof actualCuatr !== 'string') {
+          acc[codigo] = asig;
+        } else if (typeof cuatr === 'string' && typeof actualCuatr === 'string') {
+          // Si ambos son string, mantener el primero (o puedes cambiar la lógica si quieres)
+        } else if (typeof cuatr !== 'string' && typeof actualCuatr !== 'string') {
+          // Ambos son número, tomar el menor
+          if (Number(cuatr) < Number(actualCuatr)) {
+            acc[codigo] = asig;
+          }
+        }
+        // Si el actual es string y el nuevo no, mantener el actual
+      }
+      return acc;
+    }, {})
   );
 
   // Filtrado por código de asignatura (acepta string o número, y convierte a string antes de buscar)
   const asignaturasFiltradas = query.trim() === ''
-    ? asignaturasRaw
-    : asignaturasRaw.filter(asig => {
+    ? asignaturasUnicas
+    : asignaturasUnicas.filter(asig => {
         const codigo = asig["Código"];
         return (
           codigo &&
@@ -234,7 +261,7 @@ export default function BuscaAulaScreen() {
         </View>
         <FlatList
           data={asignaturasPaginadas}
-          keyExtractor={(item, idx) => `${item.carreraCodigo}-${item["Código"] || idx}-${item["Cuatrimestre"] || ""}`}
+          keyExtractor={item => `${item["Código"]}`}
           renderItem={({ item }) => (
             <TouchableOpacity
               style={styles.resultItem}
@@ -318,7 +345,7 @@ export default function BuscaAulaScreen() {
           renderItem={({ item }) => (
             <TouchableOpacity
               style={[styles.resultItem, {
-                backgroundColor: departamentoSeleccionado.color,
+                backgroundColor: item.deptoColor || departamentoSeleccionado.color,
                 borderWidth: 0
               }]}
               onPress={() => navigation.navigate('AsignaturasPorCarrera', { carrera: item })}
