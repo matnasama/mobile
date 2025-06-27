@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { StatusBar } from 'expo-status-bar';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
@@ -29,6 +29,8 @@ import TramiteDetalleScreen from './screens/TramiteDetalleScreen';
 import EmailScreen from './screens/EmailScreen';
 import EncontranosScreen from './screens/EncontranosScreen';
 import CorrelatividadesScreen from './screens/CorrelatividadesScreen';
+import RedesScreen from './screens/RedesScreen';
+import * as SplashScreen from 'expo-splash-screen';
 
 const Tab = createBottomTabNavigator();
 const AlumnosStack = createStackNavigator();
@@ -65,8 +67,6 @@ function TabsScreen() {
         tabBarIcon: ({ color, size }) => {
           if (route.name === 'Home') {
             return <Ionicons name="home" size={size} color={color} />;
-          } else if (route.name === 'Alumnos') {
-            return <MaterialIcons name="people" size={size} color={color} />;
           } else if (route.name === 'Novedades') {
             return <FontAwesome5 name="newspaper" size={size-2} color={color} />;
           } else if (route.name === 'Ayuda') {
@@ -107,14 +107,6 @@ function TabsScreen() {
         }}
       />
       <Tab.Screen 
-        name="Alumnos" 
-        component={AlumnosStackScreen} 
-        options={{
-          tabBarAccessibilityLabel: 'Alumnos',
-          tabBarAccessibilityHint: 'Ir a la sección de alumnos y trámites',
-        }}
-      />
-      <Tab.Screen 
         name="Novedades" 
         component={NovedadesScreen} 
         options={{
@@ -138,14 +130,22 @@ function MainStackScreen() {
   return (
     <MainStack.Navigator screenOptions={{ headerShown: false }}>
       <MainStack.Screen name="Tabs" component={TabsScreen} />
+      <MainStack.Screen name="AlumnosMain" component={AlumnosScreen} options={{ title: 'Alumnos' }} />
       <MainStack.Screen name="WebViewScreen" component={WebViewScreen} options={{ title: 'Enlace' }} />
       <MainStack.Screen name="EmailScreen" component={EmailScreen} options={{ title: 'Contacto' }} />
       <MainStack.Screen name="EncontranosScreen" component={EncontranosScreen} options={{ title: 'Dónde estamos' }} />
+      <MainStack.Screen name="Redes" component={RedesScreen} options={{ title: 'Redes sociales' }} />
     </MainStack.Navigator>
   );
 }
 
 export default function App() {
+  useEffect(() => {
+    setTimeout(() => {
+      SplashScreen.hideAsync();
+    }, 1500); // 1.5 segundos
+  }, []);
+
   return (
     <SafeAreaProvider>
       <NavigationContainer>

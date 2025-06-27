@@ -1,10 +1,10 @@
 {
   "expo": {
-    "name": "my-app",
+    "name": "alumnos",
     "slug": "my-app",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/icon.png",
+    "icon": "./assets/Logo.png",
     "userInterfaceStyle": "light",
     "newArchEnabled": true,
     "splash": {

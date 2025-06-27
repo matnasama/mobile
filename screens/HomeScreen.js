@@ -1,6 +1,7 @@
 import React from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, Dimensions } from 'react-native';
 import { MaterialIcons, FontAwesome5, Ionicons, Entypo, Feather, MaterialCommunityIcons } from '@expo/vector-icons';
+import { useNavigation } from '@react-navigation/native';
 
 const opciones = [
   { label: 'Soy estudiante', icon: <MaterialIcons name="school" size={28} color="#fff" style={{marginRight: 8}} /> },
@@ -21,15 +22,16 @@ const cardColors = [
 ];
 
 const iconos = [
-  <MaterialCommunityIcons name="account-school" size={28} color="#fff" />,
+  <MaterialIcons name="school" size={28} color="#fff" />, // Estudiante
   <FontAwesome5 name="university" size={26} color="#fff" />,
   <MaterialCommunityIcons name="book-multiple" size={28} color="#fff" />,
-  <Ionicons name="accessibility" size={28} color="#fff" />,
-  <Entypo name="social" size={28} color="#fff" />,
-  <Entypo name="map" size={28} color="#fff" />,
+  <MaterialIcons name="accessibility" size={28} color="#fff" />,
+  <Entypo name="share" size={28} color="#fff" />, // Redes sociales
+  <Feather name="map-pin" size={28} color="#fff" />,
 ];
 
 export default function HomeScreen() {
+  const navigation = useNavigation();
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Mi Universidad</Text>
@@ -41,7 +43,15 @@ export default function HomeScreen() {
             activeOpacity={0.8}
             accessibilityLabel={op.label}
             accessibilityHint={`Acceso a la sección ${op.label}`}
-            // onPress={() => {}}
+            onPress={() => {
+              if (op.label === 'Redes') {
+                navigation.navigate('Redes');
+              } else if (op.label === 'Soy estudiante') {
+                navigation.navigate('AlumnosMain'); // Navega directo al screen del stack, que sí existe
+              } else {
+                // Aquí puedes agregar navegación para otras opciones si lo deseas
+              }
+            }}
           >
             <View style={styles.cardContent}>
               {iconos[idx]}
@@ -104,10 +114,13 @@ const styles = StyleSheet.create({
     gap: 4,
   },
   cardText: {
-    fontSize: 12,
-    fontWeight: 'bold',
+    fontSize: 13,
+    fontWeight: '400', // Regular
     color: '#fff',
     textAlign: 'center',
     paddingHorizontal: 2,
+    flexShrink: 1,
+    flexWrap: 'wrap',
+    maxWidth: '95%',
   },
 });
