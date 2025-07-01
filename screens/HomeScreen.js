@@ -1,126 +1,121 @@
-import React from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, Dimensions } from 'react-native';
-import { MaterialIcons, FontAwesome5, Ionicons, Entypo, Feather, MaterialCommunityIcons } from '@expo/vector-icons';
-import { useNavigation } from '@react-navigation/native';
+import React, { useState, useEffect } from 'react';
+import { View, Text, ActivityIndicator, StyleSheet, TouchableOpacity, ScrollView } from 'react-native';
+import { MaterialIcons, FontAwesome5, Ionicons, Entypo } from '@expo/vector-icons';
 
-const opciones = [
-  { label: 'Soy estudiante', icon: <MaterialIcons name="school" size={28} color="#fff" style={{marginRight: 8}} /> },
-  { label: 'Quiero estudiar en la UNM', icon: <FontAwesome5 name="user-graduate" size={26} color="#fff" style={{marginRight: 8}} /> },
-  { label: 'Carreras', icon: <MaterialIcons name="menu-book" size={28} color="#fff" style={{marginRight: 8}} /> },
-  { label: 'Accesibilidad', icon: <MaterialIcons name="accessibility" size={28} color="#fff" style={{marginRight: 8}} /> },
-  { label: 'Redes', icon: <Entypo name="network" size={28} color="#fff" style={{marginRight: 8}} /> },
-  { label: 'Mapa', icon: <Feather name="map-pin" size={28} color="#fff" style={{marginRight: 8}} /> },
-];
+export default function HomeScreen({ navigation }) {
+  const [alumnosData, setAlumnosData] = useState(null);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
 
-const cardColors = [
-  '#b5458d', // Soy estudiante
-  '#5aaa31', // Quiero estudiar en la UNM
-  '#66b2d6', // Carreras
-  '#f59c00', // Accesibilidad
-  '#d32a17', // Redes
-  '#0a2447', // Mapa
-];
+  useEffect(() => {
+    setLoading(true);
+    fetch('https://raw.githubusercontent.com/matnasama/depto-alumnos/refs/heads/main/src/data/data.json')
+      .then(res => res.json())
+      .then(data => {
+        setAlumnosData(data);
+        setLoading(false);
+      })
+      .catch(err => {
+        setError('Error al cargar los datos');
+        setLoading(false);
+      });
+  }, []);
 
-const iconos = [
-  <MaterialIcons name="school" size={28} color="#fff" />, // Estudiante
-  <FontAwesome5 name="university" size={26} color="#fff" />,
-  <MaterialCommunityIcons name="book-multiple" size={28} color="#fff" />,
-  <MaterialIcons name="accessibility" size={28} color="#fff" />,
-  <Entypo name="share" size={28} color="#fff" />, // Redes sociales
-  <Feather name="map-pin" size={28} color="#fff" />,
-];
+  const cardColors = [
+    '#b5458d',
+    '#5aaa31',
+    '#66b2d6',
+    '#f59c00',
+    '#d32a17',
+  ];
 
-export default function HomeScreen() {
-  const navigation = useNavigation();
+  const cardIcons = [
+    <MaterialIcons name="assignment" size={38} color="#fff" />, // Trámites
+    <Ionicons name="help-circle" size={38} color="#fff" />, // Consultas
+    <Entypo name="link" size={38} color="#fff" />, // Sitios
+    <MaterialIcons name="gavel" size={38} color="#fff" />, // Reglamento
+    <FontAwesome5 name="chalkboard-teacher" size={38} color="#fff" />, // Busca tu aula
+    <MaterialIcons name="event" size={38} color="#fff" />, // Calendario Académico
+    <MaterialIcons name="menu-book" size={38} color="#fff" />, // Programas de asignatura
+    <MaterialIcons name="school" size={38} color="#fff" />, // Planes de estudio
+    <MaterialIcons name="compare-arrows" size={38} color="#fff" />, // Correlatividades
+  ];
+
+  if (loading) return <ActivityIndicator size="large" color="#333" />;
+  if (error) return <Text style={{color:'red'}}>{error}</Text>;
+  if (!alumnosData) return null;
+
+  // Debug: mostrar datos y estructura de botones
+  const botones = [
+    { label: 'Trámites', onPress: () => navigation.navigate('Tramites', { data: alumnosData.tramites }) },
+    { label: 'Consultas', onPress: () => navigation.navigate('Consultas', { data: alumnosData.consultas }) },
+    { label: 'Sitios', onPress: () => navigation.navigate('Sitios', { data: alumnosData.sitios }) },
+    { label: 'Reglamento', onPress: () => navigation.navigate('Reglamentos') },
+    { label: 'Busca tu aula', onPress: () => navigation.navigate('Busca tu aula', { reset: true }) },
+    { label: 'Calendario Académico', onPress: () => navigation.navigate('Calendario Academico') },
+    { label: 'Programas de asignatura', onPress: () => navigation.navigate('ProgramasDepto') },
+    { label: 'Planes de estudio', onPress: () => navigation.navigate('PlanesEstudio') },
+    { label: 'Correlatividades', onPress: () => navigation.navigate('Correlatividades') },
+  ];
+
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>Mi Universidad</Text>
-      <View style={styles.cardsContainer}>
-        {opciones.map((op, idx) => (
-          <TouchableOpacity
-            key={op.label}
-            style={[styles.card, { backgroundColor: cardColors[idx % cardColors.length] }]}
-            activeOpacity={0.8}
-            accessibilityLabel={op.label}
-            accessibilityHint={`Acceso a la sección ${op.label}`}
-            onPress={() => {
-              if (op.label === 'Redes') {
-                navigation.navigate('Redes');
-              } else if (op.label === 'Soy estudiante') {
-                navigation.navigate('AlumnosMain'); // Navega directo al screen del stack, que sí existe
-              } else {
-                // Aquí puedes agregar navegación para otras opciones si lo deseas
-              }
-            }}
-          >
-            <View style={styles.cardContent}>
-              {iconos[idx]}
-              <Text style={styles.cardText} allowFontScaling={true}>{op.label}</Text>
-            </View>
-          </TouchableOpacity>
-        ))}
-      </View>
+    <View style={{width:'100%', flex:1, backgroundColor:'#fff'}}>
+      <ScrollView contentContainerStyle={{alignItems:'center', justifyContent:'center', flexGrow:1}}>
+        <View style={styles.cardsContainer}>
+          {botones.map((btn, idx) => (
+            <TouchableOpacity
+              key={btn.label}
+              style={[
+                styles.card,
+                { backgroundColor: cardColors[idx % cardColors.length] },
+              ]}
+              onPress={btn.onPress}
+              activeOpacity={0.85}
+              accessibilityLabel={btn.label}
+              accessibilityHint={`Acceso a la sección ${btn.label}`}
+            >
+              {cardIcons[idx]}
+              <Text style={styles.cardText}>{btn.label}</Text>
+            </TouchableOpacity>
+          ))}
+        </View>
+      </ScrollView>
     </View>
   );
 }
 
-// Calcula el ancho de cada card para que entren 3 por fila y ocupen el 99% del ancho disponible
-const GAP = 8;
-const CARDS_PER_ROW = 3;
-const CONTAINER_WIDTH = Dimensions.get('window').width;
-const CARD_SIZE = Math.floor((CONTAINER_WIDTH - GAP * (CARDS_PER_ROW + 1)) / CARDS_PER_ROW);
-
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    paddingTop: 32,
-    alignItems: 'center',
-  },
-  title: {
-    fontSize: 28,
-    fontWeight: 'bold',
-    color: '#384d9f',
-    textAlign: 'center',
-    marginBottom: 28,
-  },
   cardsContainer: {
     flexDirection: 'row',
     flexWrap: 'wrap',
-    justifyContent: 'flex-start',
-    alignItems: 'flex-start',
-    width: CONTAINER_WIDTH,
-    paddingHorizontal: GAP,
-    gap: GAP,
+    justifyContent: 'center',
+    alignItems: 'center',
+    width: '100%',
+    paddingHorizontal: 8,
+    gap: 16,
   },
   card: {
-    width: CARD_SIZE,
-    height: CARD_SIZE,
-    borderRadius: 100,
-    marginBottom: GAP,
+    width: 140,
+    height: 140,
+    borderRadius: 70,
+    margin: 8,
     alignItems: 'center',
     justifyContent: 'center',
     elevation: 2,
     shadowColor: '#000',
     shadowOffset: { width: 1, height: 2 },
-    shadowOpacity: 0.38,
-    shadowRadius: 100,
-    padding: 14,
-  },
-  cardContent: {
-    flexDirection: 'column',
-    alignItems: 'center',
-    justifyContent: 'center',
-    gap: 4,
+    shadowOpacity: 0.18,
+    shadowRadius: 12,
+    padding: 10,
   },
   cardText: {
-    fontSize: 13,
-    fontWeight: '400', // Regular
+    fontSize: 16,
+    fontWeight: 'bold',
     color: '#fff',
     textAlign: 'center',
     paddingHorizontal: 2,
     flexShrink: 1,
     flexWrap: 'wrap',
-    maxWidth: '95%',
+    maxWidth: '90%',
   },
 });
