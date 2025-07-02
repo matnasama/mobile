@@ -79,8 +79,8 @@ export default function PlanesEstudioScreen({ navigation }) {
             onPress={() => setDepto(dep)}
             activeOpacity={0.85}
             accessible={true}
-            accessibilityLabel={dep.nombre}
-            accessibilityHint="Seleccionar departamento para ver carreras y planes de estudio"
+            accessibilityLabel={`Seleccionar departamento ${dep.nombre}`}
+            accessibilityHint={`Muestra las carreras y planes de estudio disponibles en el departamento ${dep.nombre}`}
           >
             <Text style={styles.buttonText} allowFontScaling={true}>{dep.nombre}</Text>
           </TouchableOpacity>
@@ -108,8 +108,8 @@ export default function PlanesEstudioScreen({ navigation }) {
                 onPress={() => setExpandedIdx(expandedIdx === idx ? null : idx)}
                 activeOpacity={0.85}
                 accessible={true}
-                accessibilityLabel={nombreCarrera}
-                accessibilityHint="Expandir para ver el plan de estudios de la carrera"
+                accessibilityLabel={`Seleccionar carrera ${nombreCarrera}`}
+                accessibilityHint={`Expande para ver y descargar el plan de estudios de la carrera ${nombreCarrera}`}
               >
                 <Text style={styles.buttonText} allowFontScaling={true}>{nombreCarrera}</Text>
               </TouchableOpacity>
@@ -120,11 +120,11 @@ export default function PlanesEstudioScreen({ navigation }) {
                     style={styles.downloadBtn} 
                     onPress={() => {
                       const urlCompleta = planUrl.startsWith('http') ? planUrl : `https://www.unm.edu.ar${planUrl}`;
-                      Linking.openURL(urlCompleta);
+                      navigation.navigate('WebViewScreen', { url: urlCompleta, tipo: 'plan', carrera: nombreCarrera });
                     }}
                     accessible={true}
-                    accessibilityLabel="Descargar PDF del plan de estudios"
-                    accessibilityHint="Descarga el archivo PDF del plan de estudios de la carrera seleccionada"
+                    accessibilityLabel={`Descargar plan de estudios de la carrera ${nombreCarrera}`}
+                    accessibilityHint={`Abre el PDF del plan de estudios de la carrera ${nombreCarrera} en una nueva pantalla dentro de la app. Puede volver atrás para seguir viendo las carreras.`}
                   >
                     <Text style={styles.downloadBtnText} allowFontScaling={true}>Descargar PDF</Text>
                   </TouchableOpacity>

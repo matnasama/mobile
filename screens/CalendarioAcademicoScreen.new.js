@@ -1,7 +1,5 @@
-import React, { useEffect, useState, useCallback } from 'react';
-import { View, Text, TouchableOpacity, StyleSheet, ScrollView, ActivityIndicator, BackHandler } from 'react-native';
-import { useFocusEffect } from '@react-navigation/native';
-import { Ionicons } from '@expo/vector-icons';
+import React, { useEffect, useState } from 'react';
+import { View, Text, TouchableOpacity, StyleSheet, ScrollView, ActivityIndicator } from 'react-native';
 
 const TIPO_LABELS = {
   tramite: 'Trámites',
@@ -9,39 +7,13 @@ const TIPO_LABELS = {
   cursada: 'Inscripción a asignaturas',
 };
 
-export default function CalendarioAcademicoScreen({ navigation }) {
-  useEffect(() => {
-    return () => {
-    };
-  }, []);
-
+export default function CalendarioAcademicoScreen() {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [tipo, setTipo] = useState(null);
   const [cuatrimestre, setCuatrimestre] = useState(null);
   const [turno, setTurno] = useState(null);
-
-  // Manejo del botón físico de volver SOLO con BackHandler
-  useFocusEffect(
-    React.useCallback(() => {
-      const onBackPress = () => {
-        if (turno) {
-          setTurno(null);
-          return true;
-        } else if (cuatrimestre) {
-          setCuatrimestre(null);
-          return true;
-        } else if (tipo) {
-          setTipo(null);
-          return true;
-        }
-        return false;
-      };
-      const subscription = BackHandler.addEventListener('hardwareBackPress', onBackPress);
-      return () => subscription.remove();
-    }, [tipo, cuatrimestre, turno])
-  );
 
   useEffect(() => {
     fetch('https://raw.githubusercontent.com/matnasama/buscador-de-aulas/refs/heads/main/public/json/info/calendarioGrado.json')
@@ -62,24 +34,12 @@ export default function CalendarioAcademicoScreen({ navigation }) {
   // Obtener los tipos únicos presentes en el JSON
   const tiposDisponibles = Array.from(new Set(data.map(item => item.tipo)));
 
-  // Header con flecha de volver SIEMPRE visible
-  const showBack = true;
-  const handleBack = () => {
-    if (turno) setTurno(null);
-    else if (cuatrimestre) setCuatrimestre(null);
-    else if (tipo) setTipo(null);
-    else navigation.goBack();
-  };
-
-  // Header visual mejorado
-  const renderHeader = (title) => null;
-
   // Si no se seleccionó tipo, mostrar los botones de tipo
   if (!tipo) {
     return (
       <View style={styles.container}>
-        {/* {renderHeader('Calendario Académico')} */}
-        {tiposDisponibles.map((t) => (
+        <Text style={styles.title}>Calendario Académico</Text>
+        {tiposDisponibles.map((t, idx) => (
           <TouchableOpacity
             key={t}
             style={styles.mainBtn}
@@ -98,8 +58,8 @@ export default function CalendarioAcademicoScreen({ navigation }) {
     if (!turno) {
       return (
         <View style={styles.container}>
-          {renderHeader('Exámenes finales')}
-          {turnos.map((t) => (
+          <Text style={styles.title}>Exámenes finales</Text>
+          {turnos.map((t, idx) => (
             <TouchableOpacity
               key={t}
               style={styles.mainBtn}
@@ -108,6 +68,9 @@ export default function CalendarioAcademicoScreen({ navigation }) {
               <Text style={styles.mainBtnText}>{t}</Text>
             </TouchableOpacity>
           ))}
+          <TouchableOpacity style={styles.backBtn} onPress={() => setTipo(null)}>
+            <Text style={styles.backBtnText}>Volver</Text>
+          </TouchableOpacity>
         </View>
       );
     }
@@ -115,7 +78,7 @@ export default function CalendarioAcademicoScreen({ navigation }) {
     const actividades = data.filter(item => item.tipo === 'examen' && item.turno === turno);
     return (
       <ScrollView style={{ flex: 1, backgroundColor: '#fff' }} contentContainerStyle={{ padding: 16 }}>
-        {renderHeader(`Turno: ${turno}`)}
+        <Text style={styles.title}>Turno: {turno}</Text>
         {actividades.length === 0 && <Text style={{color:'#888', marginTop: 20}}>No hay actividades para este turno.</Text>}
         {actividades.map((item, idx) => (
           <View key={idx} style={styles.accordionItem}>
@@ -125,6 +88,9 @@ export default function CalendarioAcademicoScreen({ navigation }) {
             </View>
           </View>
         ))}
+        <TouchableOpacity style={styles.backBtn} onPress={() => setTurno(null)}>
+          <Text style={styles.backBtnText}>Volver</Text>
+        </TouchableOpacity>
       </ScrollView>
     );
   }
@@ -133,12 +99,15 @@ export default function CalendarioAcademicoScreen({ navigation }) {
   if (!cuatrimestre) {
     return (
       <View style={styles.container}>
-        {renderHeader(`${TIPO_LABELS[tipo] || tipo}`)}
+        <Text style={styles.title}>{TIPO_LABELS[tipo] || tipo}</Text>
         <TouchableOpacity style={styles.mainBtn} onPress={() => setCuatrimestre('1')}>
           <Text style={styles.mainBtnText}>Primer cuatrimestre</Text>
         </TouchableOpacity>
         <TouchableOpacity style={styles.mainBtn} onPress={() => setCuatrimestre('2')}>
           <Text style={styles.mainBtnText}>Segundo cuatrimestre</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.backBtn} onPress={() => setTipo(null)}>
+          <Text style={styles.backBtnText}>Volver</Text>
         </TouchableOpacity>
       </View>
     );
@@ -148,7 +117,7 @@ export default function CalendarioAcademicoScreen({ navigation }) {
   const actividades = data.filter(item => item.tipo === tipo && String(item.cuatrimestre) === cuatrimestre);
   return (
     <ScrollView style={{ flex: 1, backgroundColor: '#fff' }} contentContainerStyle={{ padding: 16 }}>
-      {renderHeader(`${TIPO_LABELS[tipo] || tipo} - ${cuatrimestre === '1' ? 'Primer cuatrimestre' : 'Segundo cuatrimestre'}`)}
+      <Text style={styles.title}>{TIPO_LABELS[tipo] || tipo} - {cuatrimestre === '1' ? 'Primer cuatrimestre' : 'Segundo cuatrimestre'}</Text>
       {actividades.length === 0 && <Text style={{color:'#888', marginTop: 20}}>No hay actividades para este cuatrimestre.</Text>}
       {actividades.map((item, idx) => (
         <View key={idx} style={styles.accordionItem}>
@@ -158,6 +127,9 @@ export default function CalendarioAcademicoScreen({ navigation }) {
           </View>
         </View>
       ))}
+      <TouchableOpacity style={styles.backBtn} onPress={() => setCuatrimestre(null)}>
+        <Text style={styles.backBtnText}>Volver</Text>
+      </TouchableOpacity>
     </ScrollView>
   );
 }
@@ -189,12 +161,23 @@ const styles = StyleSheet.create({
   },
   mainBtnText: {
     color: '#fff',
+    fontWeight: 'bold',
     fontSize: 17,
     textAlign: 'center',
   },
-  backIcon: {
-    marginRight: 8,
-    padding: 8,
+  backBtn: {
+    marginTop: 18,
+    backgroundColor: '#e3eaff',
+    borderRadius: 8,
+    paddingVertical: 10,
+    alignItems: 'center',
+    width: '60%',
+    alignSelf: 'center',
+  },
+  backBtnText: {
+    color: '#384d9f',
+    fontWeight: 'bold',
+    fontSize: 16,
   },
   accordionItem: {
     backgroundColor: '#f5f5f5',

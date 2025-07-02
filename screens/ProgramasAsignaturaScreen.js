@@ -1,7 +1,7 @@
 import React from 'react';
 import { ScrollView, Text, View, StyleSheet, TouchableOpacity, Linking } from 'react-native';
 
-export default function ProgramasAsignaturaScreen({ route }) {
+export default function ProgramasAsignaturaScreen({ route, navigation }) {
   const { depto, carrera, data } = route.params;
   // Filtrar todos los programas de la carrera seleccionada
   const programasCarrera = Array.isArray(data.programas)
@@ -22,11 +22,12 @@ export default function ProgramasAsignaturaScreen({ route }) {
             {typeof materia.url === 'string' && materia.url.trim() !== '' && (
               <TouchableOpacity
                 style={styles.downloadBtn}
-                onPress={() => Linking.openURL(materia.url)}
-                accessibilityLabel={`Descargar programa de ${materia.materia}`}
-                accessibilityHint={`Abre el PDF del programa de la materia ${materia.materia} en el navegador`}
+                onPress={() => navigation.navigate('WebViewScreen', { url: materia.url, tipo: 'programa', materia: materia.materia })}
+                accessible={true}
+                accessibilityLabel={`Descargar programa de la materia ${materia.materia}`}
+                accessibilityHint={`Abre el PDF del programa de la materia ${materia.materia} en una nueva pantalla dentro de la app. Puede volver atrás para seguir viendo las materias.`}
               >
-                <Text style={styles.downloadBtnText} allowFontScaling={true}>Descargar</Text>
+                <Text style={styles.downloadBtnText} allowFontScaling={true}>Descargar programa</Text>
               </TouchableOpacity>
             )}
           </View>
@@ -87,7 +88,6 @@ const styles = StyleSheet.create({
   },
   downloadBtnText: {
     color: '#fff',
-    fontWeight: 'bold',
     fontSize: 16,
   },
 });

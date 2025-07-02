@@ -49,7 +49,7 @@ export default function HomeScreen({ navigation }) {
   const botones = [
     { label: 'Trámites', onPress: () => navigation.navigate('Tramites', { data: alumnosData.tramites }) },
     { label: 'Consultas', onPress: () => navigation.navigate('Consultas', { data: alumnosData.consultas }) },
-    { label: 'Sitios', onPress: () => navigation.navigate('Sitios', { data: alumnosData.sitios }) },
+    { label: 'Sitios', onPress: () => navigation.navigate('Home', { screen: 'Sitios', params: { data: alumnosData.sitios } }) },
     { label: 'Reglamento', onPress: () => navigation.navigate('Reglamentos') },
     { label: 'Busca tu aula', onPress: () => navigation.navigate('Busca tu aula', { reset: true }) },
     { label: 'Calendario Académico', onPress: () => navigation.navigate('Calendario Academico') },
@@ -107,10 +107,11 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.18,
     shadowRadius: 12,
     padding: 10,
+    borderWidth: 3, // Borde más realista
+    borderColor: '#0a2447', // Azul oscuro solicitado
   },
   cardText: {
     fontSize: 16,
-    fontWeight: 'bold',
     color: '#fff',
     textAlign: 'center',
     paddingHorizontal: 2,

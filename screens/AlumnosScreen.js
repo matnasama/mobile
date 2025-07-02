@@ -30,7 +30,7 @@ export default function AlumnosScreen({ navigation }) {
         {/* Botones principales */}
         <TouchableOpacity
           style={styles.button}
-          onPress={() => navigation.navigate('Tramites', { data: alumnosData.tramites })}
+          onPress={() => navigation.navigate('Tramites')}
           accessible={true}
           accessibilityLabel="Trámites"
           accessibilityHint="Ver y gestionar trámites de alumnos"
@@ -39,7 +39,7 @@ export default function AlumnosScreen({ navigation }) {
         </TouchableOpacity>
         <TouchableOpacity
           style={styles.button}
-          onPress={() => navigation.navigate('Consultas', { data: alumnosData.consultas })}
+          onPress={() => navigation.navigate('Consultas')}
           accessible={true}
           accessibilityLabel="Consultas"
           accessibilityHint="Ver consultas frecuentes de alumnos"
@@ -48,7 +48,7 @@ export default function AlumnosScreen({ navigation }) {
         </TouchableOpacity>
         <TouchableOpacity
           style={styles.button}
-          onPress={() => navigation.navigate('Sitios', { data: alumnosData.sitios })}
+          onPress={() => navigation.navigate('Home', { screen: 'Sitios' })}
           accessible={true}
           accessibilityLabel="Sitios"
           accessibilityHint="Ver sitios y enlaces útiles para alumnos"
@@ -57,7 +57,7 @@ export default function AlumnosScreen({ navigation }) {
         </TouchableOpacity>
         <TouchableOpacity
           style={styles.button}
-          onPress={() => navigation.navigate('Reglamentos')}
+          onPress={() => navigation.navigate('Home', { screen: 'Reglamentos' })}
           accessible={true}
           accessibilityLabel="Reglamento"
           accessibilityHint="Ver reglamento de alumnos"
@@ -66,7 +66,7 @@ export default function AlumnosScreen({ navigation }) {
         </TouchableOpacity>
         <TouchableOpacity
           style={styles.button}
-          onPress={() => navigation.navigate('Busca tu aula', { reset: true })}
+          onPress={() => navigation.navigate('Home', { screen: 'Busca tu aula' })}
           accessible={true}
           accessibilityLabel="Busca tu aula"
           accessibilityHint="Buscar el aula asignada para tus materias"
@@ -128,7 +128,6 @@ const styles = StyleSheet.create({
   },
   buttonText: {
     color: '#fff',
-    fontWeight: 'bold',
     fontSize: 18,
     textAlign: 'center',
     width: '100%',

@@ -1,8 +1,7 @@
 import React from 'react';
-import { View, TouchableOpacity, StyleSheet, Linking, Image, Text } from 'react-native';
+import { View, TouchableOpacity, StyleSheet, Linking, Text } from 'react-native';
 import { FontAwesome, Feather, AntDesign } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
-import { Ionicons } from '@expo/vector-icons';
 
 const redes = [
   {
@@ -31,17 +30,7 @@ export default function RedesScreen() {
   const navigation = useNavigation();
   return (
     <View style={styles.container}>
-      <View style={styles.header}>
-        <Ionicons
-          name="arrow-back"
-          size={28}
-          color="#1976d2"
-          style={{ marginRight: 12 }}
-          onPress={() => navigation.goBack()}
-          accessibilityLabel="Volver"
-        />
-        <Text style={styles.title}>Redes sociales</Text>
-      </View>
+      <Text style={styles.title}>Redes sociales</Text>
       <View style={styles.content}>
         <View style={styles.redesRow}>
           {redes.map((r, idx) => (
@@ -67,25 +56,11 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     alignItems: 'center',
   },
-  header: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    marginBottom: 18,
-    width: '100%',
-    paddingHorizontal: 18,
-    marginTop: 32,
-    position: 'absolute',
-    top: 0,
-    left: 0,
-    right: 0,
-    backgroundColor: '#fff',
-    zIndex: 2,
-    paddingTop: 32,
-  },
   title: {
     fontSize: 20,
-    fontWeight: 'bold',
     color: '#1976d2',
+    marginTop: 32,
+    marginBottom: 18,
   },
   content: {
     flex: 1,

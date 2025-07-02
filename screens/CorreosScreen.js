@@ -1,10 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { View, Text, StyleSheet, ScrollView, ActivityIndicator } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
 import { Ionicons } from '@expo/vector-icons';
 
 export default function CorreosScreen() {
-  const navigation = useNavigation();
   const [correos, setCorreos] = useState([]);
   const [loading, setLoading] = useState(true);
 
@@ -23,17 +21,8 @@ export default function CorreosScreen() {
 
   return (
     <View style={styles.container}>
-      <View style={styles.header}>
-        <Ionicons
-          name="arrow-back"
-          size={28}
-          color="#1976d2"
-          style={{ marginRight: 12 }}
-          onPress={() => navigation.goBack()}
-          accessibilityLabel="Volver"
-        />
-        <Text style={styles.title}>Correos de contacto</Text>
-      </View>
+      {/* Header eliminado */}
+      <Text style={styles.title}>Correos de contacto</Text>
       {loading ? (
         <ActivityIndicator size="large" color="#384d9f" style={{marginTop: 24}} />
       ) : (
@@ -62,17 +51,11 @@ const styles = StyleSheet.create({
     paddingTop: 32,
     paddingHorizontal: 8,
   },
-  header: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    marginBottom: 18,
-    width: '100%',
-    paddingHorizontal: 18,
-  },
   title: {
     fontSize: 20,
     fontWeight: 'bold',
     color: '#1976d2',
+    marginBottom: 18,
   },
   scrollContent: {
     alignItems: 'center',
@@ -87,7 +70,6 @@ const styles = StyleSheet.create({
     maxWidth: 400,
   },
   correoNombre: {
-    fontWeight: 'bold',
     color: '#384d9f',
     fontSize: 16,
     marginBottom: 2,

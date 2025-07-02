@@ -36,29 +36,61 @@ import CorreosScreen from './screens/CorreosScreen';
 import * as SplashScreen from 'expo-splash-screen';
 
 const Tab = createBottomTabNavigator();
-const AlumnosStack = createStackNavigator();
-const MainStack = createStackNavigator();
+const HomeStack = createStackNavigator();
+const NovedadesStack = createStackNavigator();
+const ContactosStack = createStackNavigator();
+const AyudaStack = createStackNavigator();
 
-function AlumnosStackScreen() {
+function HomeStackScreen() {
   return (
-    <AlumnosStack.Navigator>
-      <AlumnosStack.Screen name="AlumnosMain" component={AlumnosScreen} options={{ title: 'Alumnos' }} />
-      <AlumnosStack.Screen name="Tramites" component={TramitesScreen} />
-      <AlumnosStack.Screen name="Consultas" component={ConsultasScreen} options={{ title: 'Consultas frecuentes' }}/>
-      <AlumnosStack.Screen name="Sitios" component={SitiosScreen} />
-      <AlumnosStack.Screen name="Reglamentos" component={ReglamentosScreen} options={{ title: 'Reglamento de Alumnos' }}/>
-      <AlumnosStack.Screen name="Busca tu aula" component={BuscaAulaScreen} />
-      <AlumnosStack.Screen name="AsignaturasPorCarrera" component={AsignaturasPorCarreraScreen} options={{ title: 'Asignaturas' }} />
-      <AlumnosStack.Screen name="ComisionesAsignatura" component={ComisionesAsignaturaScreen} options={{ title: 'Comisiones' }} />
-      <AlumnosStack.Screen name="Calendario Academico" component={CalendarioAcademicoScreen} />
-      <AlumnosStack.Screen name="SitioDetalle" component={SitioDetalleScreen} options={{ title: 'Detalle del sitio' }} />
-      <AlumnosStack.Screen name="ProgramasDepto" component={ProgramasDeptoScreen} options={{ title: 'Programas de asignatura' }} />
-      <AlumnosStack.Screen name="ProgramasCarrera" component={ProgramasCarreraScreen} options={{ title: 'Carreras' }} />
-      <AlumnosStack.Screen name="ProgramasAsignatura" component={ProgramasAsignaturaScreen} options={{ title: 'Asignaturas' }} />
-      <AlumnosStack.Screen name="PlanesEstudio" component={PlanesEstudioScreen} options={{ title: 'Planes de estudio' }} />
-      <AlumnosStack.Screen name="TramiteDetalle" component={TramiteDetalleScreen} options={{ title: 'Detalle del trámite' }} />
-      <AlumnosStack.Screen name="Correlatividades" component={CorrelatividadesScreen} options={{ title: 'Correlatividades' }} />
-    </AlumnosStack.Navigator>
+    <HomeStack.Navigator screenOptions={{ headerShown: false }}>
+      <HomeStack.Screen name="HomeMain" component={HomeScreen} />
+      <HomeStack.Screen name="Tramites" component={TramitesScreen} />
+      <HomeStack.Screen name="Consultas" component={ConsultasScreen} />
+      <HomeStack.Screen name="Sitios" component={SitiosScreen} />
+      <HomeStack.Screen name="Reglamentos" component={ReglamentosScreen} />
+      <HomeStack.Screen name="Busca tu aula" component={BuscaAulaScreen} />
+      <HomeStack.Screen name="Calendario Academico" component={CalendarioAcademicoScreen} />
+      <HomeStack.Screen name="ProgramasDepto" component={ProgramasDeptoScreen} />
+      <HomeStack.Screen name="PlanesEstudio" component={PlanesEstudioScreen} />
+      <HomeStack.Screen name="Correlatividades" component={CorrelatividadesScreen} />
+      <HomeStack.Screen name="WebViewScreen" component={WebViewScreen} />
+      <HomeStack.Screen name="EmailScreen" component={EmailScreen} />
+      <HomeStack.Screen name="EncontranosScreen" component={EncontranosScreen} />
+      <HomeStack.Screen name="Redes" component={RedesScreen} />
+      <HomeStack.Screen name="MapaScreen" component={MapaScreen} />
+      <HomeStack.Screen name="CorreosScreen" component={CorreosScreen} />
+      <HomeStack.Screen name="ComisionesAsignatura" component={ComisionesAsignaturaScreen} />
+      <HomeStack.Screen name="AsignaturasPorCarrera" component={AsignaturasPorCarreraScreen} />
+      <HomeStack.Screen name="ProgramasCarrera" component={ProgramasCarreraScreen} />
+      <HomeStack.Screen name="ProgramasAsignatura" component={ProgramasAsignaturaScreen} />
+      <HomeStack.Screen name="TramiteDetalle" component={TramiteDetalleScreen} />
+      <HomeStack.Screen name="SitioDetalle" component={SitioDetalleScreen} />
+    </HomeStack.Navigator>
+  );
+}
+
+function NovedadesStackScreen() {
+  return (
+    <NovedadesStack.Navigator screenOptions={{ headerShown: false }}>
+      <NovedadesStack.Screen name="NovedadesMain" component={NovedadesScreen} />
+    </NovedadesStack.Navigator>
+  );
+}
+
+function ContactosStackScreen() {
+  return (
+    <ContactosStack.Navigator screenOptions={{ headerShown: false }}>
+      <ContactosStack.Screen name="ContactosMain" component={ContactosScreen} />
+    </ContactosStack.Navigator>
+  );
+}
+
+function AyudaStackScreen() {
+  return (
+    <AyudaStack.Navigator screenOptions={{ headerShown: false }}>
+      <AyudaStack.Screen name="AyudaMain" component={AyudaScreen} />
+    </AyudaStack.Navigator>
   );
 }
 
@@ -105,7 +137,12 @@ function TabsScreen() {
     >
       <Tab.Screen 
         name="Home" 
-        component={HomeScreen} 
+        component={HomeStackScreen} 
+        listeners={({ navigation, route }) => ({
+          tabPress: e => {
+            navigation.navigate('Home');
+          },
+        })}
         options={{
           tabBarAccessibilityLabel: 'Inicio',
           tabBarAccessibilityHint: 'Ir a la pantalla principal de inicio',
@@ -113,7 +150,12 @@ function TabsScreen() {
       />
       <Tab.Screen 
         name="Novedades" 
-        component={NovedadesScreen} 
+        component={NovedadesStackScreen} 
+        listeners={({ navigation, route }) => ({
+          tabPress: e => {
+            navigation.navigate('Novedades');
+          },
+        })}
         options={{
           tabBarAccessibilityLabel: 'Novedades',
           tabBarAccessibilityHint: 'Ver novedades y noticias importantes',
@@ -121,7 +163,12 @@ function TabsScreen() {
       />
       <Tab.Screen 
         name="Contactos" 
-        component={ContactosScreen} 
+        component={ContactosStackScreen} 
+        listeners={({ navigation, route }) => ({
+          tabPress: e => {
+            navigation.navigate('Contactos');
+          },
+        })}
         options={{
           tabBarAccessibilityLabel: 'Contactos',
           tabBarAccessibilityHint: 'Ver contactos y redes sociales',
@@ -129,37 +176,18 @@ function TabsScreen() {
       />
       <Tab.Screen 
         name="Ayuda" 
-        component={AyudaScreen} 
+        component={AyudaStackScreen} 
+        listeners={({ navigation, route }) => ({
+          tabPress: e => {
+            navigation.navigate('Ayuda');
+          },
+        })}
         options={{
           tabBarAccessibilityLabel: 'Ayuda',
           tabBarAccessibilityHint: 'Acceder a la sección de ayuda y contacto',
         }}
       />
     </Tab.Navigator>
-  );
-}
-
-function MainStackScreen() {
-  return (
-    <MainStack.Navigator screenOptions={{ headerShown: false }}>
-      <MainStack.Screen name="Tabs" component={TabsScreen} />
-      <MainStack.Screen name="Tramites" component={TramitesScreen} options={{ title: 'Trámites' }} />
-      <MainStack.Screen name="Consultas" component={ConsultasScreen} options={{ title: 'Consultas frecuentes' }} />
-      <MainStack.Screen name="Sitios" component={SitiosScreen} options={{ title: 'Sitios' }} />
-      <MainStack.Screen name="Reglamentos" component={ReglamentosScreen} options={{ title: 'Reglamento de Alumnos' }} />
-      <MainStack.Screen name="Busca tu aula" component={BuscaAulaScreen} options={{ title: 'Busca tu aula' }} />
-      <MainStack.Screen name="Calendario Academico" component={CalendarioAcademicoScreen} options={{ title: 'Calendario Académico' }} />
-      <MainStack.Screen name="ProgramasDepto" component={ProgramasDeptoScreen} options={{ title: 'Programas de asignatura' }} />
-      <MainStack.Screen name="PlanesEstudio" component={PlanesEstudioScreen} options={{ title: 'Planes de estudio' }} />
-      <MainStack.Screen name="Correlatividades" component={CorrelatividadesScreen} options={{ title: 'Correlatividades' }} />
-      <MainStack.Screen name="AlumnosMain" component={AlumnosScreen} options={{ title: 'Alumnos' }} />
-      <MainStack.Screen name="WebViewScreen" component={WebViewScreen} options={{ title: 'Enlace' }} />
-      <MainStack.Screen name="EmailScreen" component={EmailScreen} options={{ title: 'Contacto' }} />
-      <MainStack.Screen name="EncontranosScreen" component={EncontranosScreen} options={{ title: 'Dónde estamos' }} />
-      <MainStack.Screen name="Redes" component={RedesScreen} options={{ title: 'Redes sociales' }} />
-      <MainStack.Screen name="MapaScreen" component={MapaScreen} options={{ title: 'Mapa del campus' }} />
-      <MainStack.Screen name="CorreosScreen" component={CorreosScreen} options={{ title: 'Correos de contacto' }} />
-    </MainStack.Navigator>
   );
 }
 
@@ -174,10 +202,12 @@ export default function App() {
     <SafeAreaProvider>
       <NavigationContainer>
         <SafeAreaView style={{ flex: 1 }} edges={['top', 'bottom', 'left', 'right']}>
+          {/* Título siempre visible */}
           <View style={{ width: '100%', alignItems: 'center', backgroundColor: '#fff', paddingTop: 32 }}>
             <Text style={{ fontSize: 28, fontWeight: 'bold', color: '#384d9f', textAlign: 'center', marginBottom: 8 }}>Mi Universidad</Text>
           </View>
-          <MainStackScreen />
+          {/* Tabs siempre visibles, todas las pantallas deben ser hijas de TabsScreen */}
+          <TabsScreen />
           <StatusBar style="auto" />
         </SafeAreaView>
       </NavigationContainer>

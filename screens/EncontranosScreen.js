@@ -1,7 +1,6 @@
 import React from 'react';
-import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import { View, StyleSheet } from 'react-native';
 import { WebView } from 'react-native-webview';
-import { Ionicons } from '@expo/vector-icons';
 
 const MAP_IFRAME = `
   <html>
@@ -19,12 +18,6 @@ export default function EncontranosScreen({ navigation }) {
   return (
     <View style={{flex:1, backgroundColor:'#fff'}}>
       <View style={{ height: 40 }} />
-      <TouchableOpacity style={styles.backButton} onPress={() => navigation.goBack()}
-        accessibilityLabel="Volver"
-        accessibilityHint="Regresa a la pantalla anterior"
-      >
-        <Ionicons name="arrow-back" size={28} color="#1976d2" />
-      </TouchableOpacity>
       <View style={{flex:1, minHeight:300, padding: 16, paddingTop: 16}}>
         <WebView
           originWhitelist={["*"]}
@@ -35,12 +28,6 @@ export default function EncontranosScreen({ navigation }) {
           startInLoadingState
         />
       </View>
-      <TouchableOpacity style={styles.cerrarBtn} onPress={() => navigation.goBack()}
-        accessibilityLabel="Cerrar pantalla de ubicación"
-        accessibilityHint="Cierra la pantalla y regresa a la anterior"
-      >
-        <Text style={styles.cerrarBtnText} allowFontScaling={true}>Cerrar</Text>
-      </TouchableOpacity>
     </View>
   );
 }
@@ -68,7 +55,6 @@ const styles = StyleSheet.create({
   },
   cerrarBtnText: {
     color:'#fff',
-    fontWeight:'bold',
     fontSize:16,
   },
   backButton: {

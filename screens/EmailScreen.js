@@ -55,37 +55,34 @@ export default function EmailScreen({ navigation }) {
       });
   }, []);
 
-  const handleSend = async () => {
-    if (!dni || !nombre || !carrera || !consulta || !asunto) {
-      Alert.alert('Faltan datos', 'Por favor completá todos los campos.');
-      return;
-    }
-    const body = `Número de documento: ${dni}\nNombre y apellido: ${nombre}\nCarrera: ${carrera}\nAsunto: ${asunto}\nConsulta: ${consulta}`;
-    const options = {
-      recipients: ['alumnos@unm.edu.ar'],
-      subject: asunto,
-      body,
-    };
-    if (Platform.OS === 'web') {
-      window.open(`mailto:alumnos@unm.edu.ar?subject=Consulta%20desde%20app%20UNM&body=${encodeURIComponent(body)}`);
-    } else {
-      const result = await MailComposer.composeAsync(options);
-      if (result.status === 'sent') {
-        Alert.alert('¡Enviado!', 'Tu consulta fue enviada correctamente.');
-        setDni(''); setNombre(''); setCarrera(''); setConsulta(''); setAsunto('');
-      }
-    }
+const handleSend = async () => {
+  if (!dni || !nombre || !carrera || !consulta || !asunto) {
+    Alert.alert('Faltan datos', 'Por favor completá todos los campos.');
+    return;
+  }
+  const body = `Número de documento: ${dni}\nNombre y apellido: ${nombre}\nCarrera: ${carrera}\nAsunto: ${asunto}\nConsulta: ${consulta}`;
+  const options = {
+    recipients: ['alumnos@unm.edu.ar'],
+    subject: asunto,
+    body,
   };
+  if (Platform.OS === 'web') {
+    window.open(`mailto:alumnos@unm.edu.ar?subject=Consulta%20desde%20app%20UNM&body=${encodeURIComponent(body)}`);
+  } else {
+    const result = await MailComposer.composeAsync(options);
+    if (result.status === 'sent') {
+      Alert.alert('¡Enviado!', 'Tu consulta fue enviada correctamente.');
+      setDni(''); setNombre(''); setCarrera(''); setConsulta(''); setAsunto('');
+    } else if (result.status === 'cancelled') {
+      Alert.alert('Cancelado', 'El envío del correo fue cancelado.');
+    }
+    // No alert para 'saved' ni 'undetermined'
+  }
+};
 
   return (
     <ScrollView style={{ flex: 1, backgroundColor: '#fff' }} contentContainerStyle={styles.container}>
       <View style={{ height: 40 }} />
-      <TouchableOpacity style={styles.backButton} onPress={() => navigation.goBack()}
-        accessibilityLabel="Volver"
-        accessibilityHint="Regresa a la pantalla anterior"
-      >
-        <Ionicons name="arrow-back" size={28} color="#1976d2" />
-      </TouchableOpacity>
       <Text style={styles.title}>¿No encontrás respuesta a tu duda?</Text>
       <Text style={styles.text}>Completá el siguiente formulario y tu consulta será enviada por mail a <Text style={styles.email}>alumnos@unm.edu.ar</Text>.</Text>
       <TextInput
@@ -144,7 +141,7 @@ export default function EmailScreen({ navigation }) {
               accessibilityLabel={`Seleccionar asunto: ${a.nombre}`}
               accessibilityHint={`Selecciona el asunto ${a.nombre} para tu consulta`}
             >
-              <Text style={[styles.carreraBtnText, asunto===a.nombre ? {color:'#1976d2', fontWeight:'bold'} : {color:'#888'}]} allowFontScaling={true}>{a.nombre}</Text>
+              <Text style={[styles.carreraBtnText, asunto===a.nombre ? {color:'#1976d2'} : {color:'#888'}]} allowFontScaling={true}>{a.nombre}</Text>
             </TouchableOpacity>
           ))}
         </View>
@@ -219,7 +216,6 @@ const styles = StyleSheet.create({
   },
   carreraBtnText: {
     color: '#fff',
-    fontWeight: 'bold',
     fontSize: 15,
     textAlign: 'center',
   },
@@ -232,7 +228,6 @@ const styles = StyleSheet.create({
   },
   sendBtnText: {
     color: '#fff',
-    fontWeight: 'bold',
     fontSize: 18,
   },
   asuntoTipoBtn: {
@@ -248,11 +243,7 @@ const styles = StyleSheet.create({
   },
   asuntoTipoBtnText: {
     color: '#1976d2',
-    fontWeight: 'bold',
     fontSize: 16,
-  },
-  asuntoTipoBtnTextActive: {
-    color: '#fff',
   },
   backButton: {
     position: 'absolute',

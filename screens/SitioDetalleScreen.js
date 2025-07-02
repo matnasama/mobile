@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { View, Text, StyleSheet, ScrollView, TouchableOpacity, Linking } from 'react-native';
 
-export default function SitioDetalleScreen({ route }) {
+export default function SitioDetalleScreen({ route, navigation }) {
   const { sitio } = route.params;
   const [showAnteriores, setShowAnteriores] = useState(false);
   // Si es CAMPUS VIRTUAL y tiene subcategorías, mostrar botones
@@ -97,7 +97,6 @@ const styles = StyleSheet.create({
   },
   campusBtnText: {
     color: '#fff',
-    fontWeight: 'bold',
     fontSize: 16,
     textAlign: 'center',
   },

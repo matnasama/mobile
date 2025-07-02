@@ -1,26 +1,13 @@
 import React from 'react';
 import { View, Text, StyleSheet, Dimensions } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
-import { Ionicons } from '@expo/vector-icons';
 import ImageZoom from 'react-native-image-pan-zoom';
 import { Image } from 'react-native';
 
 export default function MapaScreen() {
-  const navigation = useNavigation();
   const { width, height } = Dimensions.get('window');
   return (
     <View style={styles.container}>
-      <View style={styles.header}>
-        <Ionicons
-          name="arrow-back"
-          size={28}
-          color="#1976d2"
-          style={{ marginRight: 12 }}
-          onPress={() => navigation.goBack()}
-          accessibilityLabel="Volver"
-        />
-        <Text style={styles.title}>Mapa del campus</Text>
-      </View>
+      <Text style={styles.title}>Mapa del campus</Text>
       <ImageZoom
         cropWidth={width}
         cropHeight={height - 100}
@@ -47,16 +34,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     paddingTop: 32,
   },
-  header: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    marginBottom: 18,
-    width: '100%',
-    paddingHorizontal: 18,
-  },
   title: {
     fontSize: 20,
-    fontWeight: 'bold',
     color: '#1976d2',
   },
 });

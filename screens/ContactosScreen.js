@@ -18,7 +18,7 @@ export default function ContactosScreen() {
     <View style={styles.container}>
       <TouchableOpacity
         style={styles.redesBtn}
-        onPress={() => navigation.navigate('Redes')}
+        onPress={() => navigation.navigate('Home', { screen: 'Redes' })}
         accessibilityLabel="Redes sociales"
         accessibilityHint="Ver redes sociales de la universidad"
       >
@@ -28,7 +28,7 @@ export default function ContactosScreen() {
       </TouchableOpacity>
       <TouchableOpacity
         style={styles.redesBtn}
-        onPress={() => navigation.navigate('MapaScreen')}
+        onPress={() => navigation.navigate('Home', { screen: 'MapaScreen' })}
         accessibilityLabel="Mapa del campus"
         accessibilityHint="Ver el mapa del campus universitario"
       >
@@ -48,7 +48,7 @@ export default function ContactosScreen() {
       </TouchableOpacity>
       <TouchableOpacity
         style={styles.redesBtn}
-        onPress={() => navigation.navigate('CorreosScreen')}
+        onPress={() => navigation.navigate('Home', { screen: 'CorreosScreen' })}
         accessibilityLabel="Correos"
         accessibilityHint="Ver correos de contacto"
       >
@@ -75,10 +75,14 @@ const styles = StyleSheet.create({
     paddingVertical: 16,
     paddingHorizontal: 24,
     marginTop: 12,
+    width: 320, // Ancho fijo para todos los botones
+    maxWidth: '90%', // Opcional: para que no se desborde en pantallas pequeñas
+    alignSelf: 'center',
+    justifyContent: 'space-between',
   },
   redesText: {
     color: '#fff',
     fontSize: 18,
-    fontWeight: 'bold',
+    // fontWeight: 'bold',
   },
 });

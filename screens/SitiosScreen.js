@@ -37,37 +37,28 @@ export default function SitiosScreen({ navigation }) {
         const imagenKey = Object.keys(item).find(k => k.toLowerCase().includes('imagen'));
         const imagenPath = imagenKey ? item[imagenKey] : null;
         const imagenUrl = imagenPath ? (imagenPath.startsWith('http') ? imagenPath : baseUrl + imagenPath) : null;
-        // Si es campus virtual, navega como antes
-        if ((item.nombre || '').toLowerCase().includes('campus virtual')) {
-          return imagenUrl ? (
-            <TouchableOpacity
-              key={idx}
-              style={styles.gridItem}
-              onPress={() => navigation.navigate('SitioDetalle', { sitio: item })}
-              activeOpacity={0.8}
-              accessible={true}
-              accessibilityLabel={item.nombre || item.titulo || `Sitio ${idx+1}`}
-              accessibilityHint="Ver detalles del sitio seleccionado"
-            >
-              <Image source={{ uri: imagenUrl }} style={imageStyle} resizeMode="contain" accessibilityLabel={item.nombre || item.titulo || `Imagen del sitio ${idx+1}`}/>
-            </TouchableOpacity>
-          ) : null;
-        }
-        // Para los demás, redirige a la url externa
         const url = item.enlace || item.url || item.link;
-        return imagenUrl && url ? (
+        if (!(imagenUrl && url)) return null;
+        return (
           <TouchableOpacity
             key={idx}
             style={styles.gridItem}
-            onPress={() => url && Linking.openURL(url)}
+            onPress={() => {
+              if ((item.nombre || '').toUpperCase().includes('CAMPUS VIRTUAL') && Array.isArray(item.subcategorias)) {
+                navigation.navigate('SitioDetalle', { sitio: item });
+              } else {
+                // Abrir en navegador externo
+                Linking.openURL(url);
+              }
+            }}
             activeOpacity={0.8}
             accessible={true}
             accessibilityLabel={item.nombre || item.titulo || `Sitio ${idx+1}`}
-            accessibilityHint="Abre el sitio web en el navegador"
+            accessibilityHint={((item.nombre || '').toUpperCase().includes('CAMPUS VIRTUAL')) ? 'Ver opciones de campus virtual' : 'Abre el sitio web en el navegador'}
           >
             <Image source={{ uri: imagenUrl }} style={imageStyle} resizeMode="contain" accessibilityLabel={item.nombre || item.titulo || `Imagen del sitio ${idx+1}`}/>
           </TouchableOpacity>
-        ) : null;
+        );
       })}
     </ScrollView>
   );
@@ -96,7 +87,6 @@ const styles = StyleSheet.create({
   },
   gridTitle: {
     fontSize: 15,
-    fontWeight: 'bold',
     marginTop: 8,
     textAlign: 'center',
     maxWidth: 140,

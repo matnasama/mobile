@@ -14,14 +14,6 @@ export default function TramitesScreen({ navigation }) {
       .then(res => res.json())
       .then(json => {
         let tramitesArr = Array.isArray(json.tramites) ? json.tramites : [];
-        // Agregar Correlatividades si no existe
-        if (!tramitesArr.some(t => (t.nombre || '').toLowerCase().includes('correlatividades'))) {
-          tramitesArr.push({
-            id: 'correlatividades',
-            nombre: 'Correlatividades',
-            descripcion: 'Información sobre correlatividades: Las correlatividades definen qué materias deben aprobarse o regularizarse antes de cursar o rendir otras. Consultá el plan de estudios de tu carrera para más detalles.'
-          });
-        }
         setTramites(tramitesArr);
         setLoading(false);
       })
@@ -92,7 +84,6 @@ const styles = StyleSheet.create({
   },
   cardTitle: {
     fontSize: 15,
-    fontWeight: 'bold',
     color: '#1976d2',
     textAlign: 'center',
     flexWrap: 'wrap',
